@@ -152,7 +152,23 @@ def make_images_from_multiple_perspectives(
 
 def make_image_of_2D_material_from_multiple_perspectives(atoms,
                                                          filename=None):
+    """Make combined image of 2D mat seen from x, y and z direction.
 
+    Image atomic structure from x, y, and z direction.
+
+    Parameters
+    ----------
+    atoms: Atoms
+        Atomic structure to make figure of.
+    filename: str
+        Filename for image. Defaults to f'{formula:metal}-perspectives.png'.
+
+    Returns
+    -------
+    filename: str
+        Filename of created file.
+
+    """
     if filename is None:
         formula = atoms.symbols.formula
         filename = f'{formula:metal}-perspectives.png'
@@ -179,6 +195,7 @@ def make_image_of_2D_material_from_multiple_perspectives(atoms,
     box = new_image.getbbox()
     new_image = new_image.crop(box=box)
     new_image.save(filename)
+    return filename
 
 
 max_cluster_id = max(clusters)
