@@ -58,6 +58,12 @@ def plot():
         atoms = row.toatoms()
         make_image_of_2D_material_from_multiple_perspectives(atoms)
 
+    plt.figure()
+    plt.scatter(pareto_data_x, pareto_data_y)
+    print('Pareto data X=', pareto_data_x)
+    print('Pareto data Y=', pareto_data_y)
+    plt.show()
+
 
 if __name__ == '__main__':
     plot()

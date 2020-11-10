@@ -12,3 +12,9 @@ Procedure to include figure script
 - Make a script ``plot.py`` with a function called ``plot``
   that can be called to plot your figures.
 
+
+Various utility functions can be found in
+-----------------------------------------
+
+`utils.py`. In order to use these functions you need to use the magic
+code listed in the top of that module.
