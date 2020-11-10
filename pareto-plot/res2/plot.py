@@ -5,6 +5,7 @@ from scipy.cluster.hierarchy import linkage, dendrogram, fcluster
 from matplotlib import pyplot as plt
 from ase.db import connect
 from ase import Atoms
+from pathlib import Path
 
 rmsdresult = read_json('results-asr.database.rmsd.json')
 rmsd_by_id = rmsdresult['rmsd_by_id']
@@ -59,6 +60,15 @@ def cut_out_square_sheet(atoms):
     return new_atoms
 
 
+def _clean_povray_files(filename):
+    path = Path(filename)
+    suffixes = ['.pov', '.ini']
+    for suffix in suffixes:
+        extra_path = path.with_suffix(suffix)
+        if extra_path.is_file():
+            extra_path.unlink()
+
+
 def run_povray(
         atoms,
         filename=None,
@@ -72,7 +82,8 @@ def run_povray(
     Filename defaults to {formula}.png.
     """
     if filename is None:
-        filename = f'{atoms.symbols.formula}.pov'
+        filename = f'{atoms.symbols.formula:metal}.pov'
+    print(f'Povray running for {filename}')
     atoms.write(
         filename=filename,
         run_povray=True,
@@ -83,11 +94,13 @@ def run_povray(
         canvas_width=canvas_width,
         **kwargs,
     )
+    _clean_povray_files(filename)
 
 
-def make_multiple_rotation_images(
+def make_images_from_multiple_rotations(
         atoms,
-        rotations=['0x,0y', '-90x,-30y'],
+        rotations=['0x,0y', '-90x,-30y', '-30x,-90y'],
+        basename=None,
         **kwargs,
 ):
     """Image atomic structure from x, y, and z direction.
@@ -98,16 +111,22 @@ def make_multiple_rotation_images(
         Atomic structure to make figure of.
     rotations: List[str]
         Povray camera rotations.
+    basename: str
+        Base for filename, for example "MoS2" would give files like
+        MoS2-'0x,0y'.png. Defaults to {atoms.symbols.formula:metal}
     kwargs: dict
         Key word arguments handed through to ase-povray interface.
 
     """
+    if basename is None:
+        basename = format(atoms.symbols.formula, 'metal')
     for rotation in rotations:
         rotation_string = rotation.replace(',', '')
-        run_povray(new_atoms,
-                   filename=f'{atoms.symbols.formula}-{rotation_string}.pov',
-                   rotation=rotation,
-                   **kwargs)
+        run_povray(
+            new_atoms,
+            filename=f'{basename}-{rotation_string}.pov',
+            rotation=rotation,
+            **kwargs)
 
 
 max_cluster_id = max(clusters)
@@ -125,25 +144,8 @@ for treated_cluster_id in [1]:  # range(max_cluster_id):
         pareto_data_y.append(row.hform)
         atoms = row.toatoms()
         new_atoms = cut_out_square_sheet(atoms)
-        make_multiple_rotation_images(new_atoms)
-        # # cell_cv = atoms.cell
-        # # natoms_in_image;
-        # atoms.write(
-        #     f'{row.formula}.pov',
-        #     run_povray=True,
-        #     # background='White',
-        #     # transparent=False,
-        #     display=False,
-        #     # rotation='-90x,-30y',
-        #     canvas_width=1000,
-        #     camera_dist=10,
-        #     # radii=0.5,
-        # )
-
-    # print('cluster_id', treated_cluster_id)
-    # print('')
-    # plt.figure()
-    # plt.title(f'cluster_id={treated_cluster_id}')
-    # plt.scatter(pareto_data_x, pareto_data_y)
-
-# plt.show()
+        make_images_from_multiple_rotations(
+            new_atoms,
+            basename=format(atoms.symbols.formula,
+                            'metal')
+        )
