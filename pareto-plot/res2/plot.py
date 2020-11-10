@@ -150,8 +150,10 @@ def make_images_from_multiple_perspectives(
     return filenames
 
 
-def make_image_of_2D_material_from_multiple_perspectives(atoms,
-                                                         filename=None):
+def make_image_of_2D_material_from_multiple_perspectives(
+        atoms,
+        filename=None
+):
     """Make combined image of 2D mat seen from x, y and z direction.
 
     Image atomic structure from x, y, and z direction.
