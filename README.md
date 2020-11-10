@@ -7,7 +7,7 @@ resources that might be useful to share
 
 A C2DB database can be found in
 -------------------------------
-`c2db-nodata.db`. This database only incluedes key-value-pairs.
+`c2db-nodata.db`. This database only includes key-value-pairs.
 
 
 Procedure to include figure script
