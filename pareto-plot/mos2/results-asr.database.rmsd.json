@@ -1,0 +1,41 @@
+{
+ "object_id": "asr.core.results::ASRResult",
+ "constructor": "asr.core.results::ASRResult",
+ "args": [],
+ "kwargs": {
+  "data": {
+   "rmsd_by_id": {
+    "MoS2-b3b4685fb6e1": {
+     "MoS2-249ca8711314": 0.9947801992137322
+    },
+    "MoS2-249ca8711314": {
+     "MoS2-b3b4685fb6e1": 0.9947801992137322
+    }
+   },
+   "uid_key": "uid"
+  },
+  "metadata": {
+   "asr_name": "asr.database.rmsd",
+   "resources": {
+    "time": 0.9705374240875244,
+    "ncores": 1,
+    "tstart": 1604395318.4071329,
+    "tend": 1604395319.3776703
+   },
+   "params": {
+    "database": "mos2.db",
+    "databaseout": null,
+    "comparison_keys": "",
+    "max_rmsd": 1.0,
+    "skip_distance_calc": false
+   },
+   "code_versions": {
+    "asr": "0.4.1-621ac3332f64089326648c4388ca400035880bc9",
+    "ase": "3.21.0b1-86ac1499d4c7e9097fbf6ca55354f86aea495342",
+    "gpaw": "20.1.1b1-00aedab27b6c2c671f373d057f9defb73f6815ca"
+   },
+   "creates": {}
+  },
+  "strict": null
+ }
+}

@@ -1,0 +1,65 @@
+{
+ "object_id": "asr.core.results::ASRResult",
+ "constructor": "asr.core.results::ASRResult",
+ "args": [],
+ "kwargs": {
+  "data": {
+   "rmsd_by_id": {
+    "ReS2-165b23e8245f": {
+     "ReS2-52484a1b6c25": 1.2731916594649995,
+     "ReS2-6ed897a5b984": null,
+     "Re2S4-e4c045e96880": 1.2632713306170473,
+     "Re4S8-627997a105e1": 1.3882379250375845
+    },
+    "ReS2-52484a1b6c25": {
+     "ReS2-165b23e8245f": 1.2731916594649995,
+     "ReS2-6ed897a5b984": null,
+     "Re2S4-e4c045e96880": 0.33831368279439467,
+     "Re4S8-627997a105e1": 0.45520326942062417
+    },
+    "ReS2-6ed897a5b984": {
+     "ReS2-165b23e8245f": null,
+     "ReS2-52484a1b6c25": null,
+     "Re2S4-e4c045e96880": 1.280520080198377,
+     "Re4S8-627997a105e1": 1.3186954111088804
+    },
+    "Re2S4-e4c045e96880": {
+     "ReS2-165b23e8245f": 1.2632713306170473,
+     "ReS2-52484a1b6c25": 0.33831368279439467,
+     "ReS2-6ed897a5b984": 1.280520080198377,
+     "Re4S8-627997a105e1": 0.20645873340064946
+    },
+    "Re4S8-627997a105e1": {
+     "ReS2-165b23e8245f": 1.3882379250375845,
+     "ReS2-52484a1b6c25": 0.45520326942062417,
+     "ReS2-6ed897a5b984": 1.3186954111088804,
+     "Re2S4-e4c045e96880": 0.20645873340064946
+    }
+   },
+   "uid_key": "uid"
+  },
+  "metadata": {
+   "asr_name": "asr.database.rmsd",
+   "resources": {
+    "time": 1.273599624633789,
+    "ncores": 1,
+    "tstart": 1604396835.5488136,
+    "tend": 1604396836.8224132
+   },
+   "params": {
+    "database": "res2.db",
+    "databaseout": null,
+    "comparison_keys": "",
+    "max_rmsd": 1.0,
+    "skip_distance_calc": false
+   },
+   "code_versions": {
+    "asr": "0.4.1-621ac3332f64089326648c4388ca400035880bc9",
+    "ase": "3.21.0b1-86ac1499d4c7e9097fbf6ca55354f86aea495342",
+    "gpaw": "20.1.1b1-00aedab27b6c2c671f373d057f9defb73f6815ca"
+   },
+   "creates": {}
+  },
+  "strict": null
+ }
+}

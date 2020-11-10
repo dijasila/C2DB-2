@@ -1,0 +1,85 @@
+{
+ "object_id": "asr.core.results::ASRResult",
+ "constructor": "asr.core.results::ASRResult",
+ "args": [],
+ "kwargs": {
+  "data": {
+   "rmsd_by_id": {
+    "Re2S4-e4c045e96880": {
+     "Re4S8-627997a105e1": 0.20645873340064946,
+     "ReS2-165b23e8245f": 1.242958700544496,
+     "ReS2-52484a1b6c25": 0.3479455609846337,
+     "ReS2-6ed897a5b984": 1.1281782908839728
+    },
+    "Re4S8-627997a105e1": {
+     "Re2S4-e4c045e96880": 0.20645873340064946,
+     "ReS2-165b23e8245f": 1.2809049249287632,
+     "ReS2-52484a1b6c25": 0.470082397725669,
+     "ReS2-6ed897a5b984": 1.166575145908801
+    },
+    "ReS2-165b23e8245f": {
+     "Re2S4-e4c045e96880": 1.242958700544496,
+     "Re4S8-627997a105e1": 1.2809049249287632,
+     "ReS2-52484a1b6c25": 1.2731916594649995,
+     "ReS2-6ed897a5b984": null
+    },
+    "ReS2-52484a1b6c25": {
+     "Re2S4-e4c045e96880": 0.3479455609846337,
+     "Re4S8-627997a105e1": 0.470082397725669,
+     "ReS2-165b23e8245f": 1.2731916594649995,
+     "ReS2-6ed897a5b984": null
+    },
+    "ReS2-6ed897a5b984": {
+     "Re2S4-e4c045e96880": 1.1281782908839728,
+     "Re4S8-627997a105e1": 1.166575145908801,
+     "ReS2-165b23e8245f": null,
+     "ReS2-52484a1b6c25": null
+    },
+    "Re2S2-08a0bb8cd5c7": {
+     "Re2S2-0bc42d14e488": null,
+     "Re2S2-1c04b3436460": 1.6190256606351563,
+     "Re2S2-3f7843d31734": null
+    },
+    "Re2S2-0bc42d14e488": {
+     "Re2S2-08a0bb8cd5c7": null,
+     "Re2S2-1c04b3436460": null,
+     "Re2S2-3f7843d31734": null
+    },
+    "Re2S2-1c04b3436460": {
+     "Re2S2-08a0bb8cd5c7": 1.6190256606351563,
+     "Re2S2-0bc42d14e488": null,
+     "Re2S2-3f7843d31734": null
+    },
+    "Re2S2-3f7843d31734": {
+     "Re2S2-08a0bb8cd5c7": null,
+     "Re2S2-0bc42d14e488": null,
+     "Re2S2-1c04b3436460": null
+    }
+   },
+   "uid_key": "uid"
+  },
+  "metadata": {
+   "asr_name": "asr.database.rmsd",
+   "resources": {
+    "time": 7.648300409317017,
+    "ncores": 1,
+    "tstart": 1604394642.4143345,
+    "tend": 1604394650.062635
+   },
+   "params": {
+    "database": "ReS2.db",
+    "databaseout": null,
+    "comparison_keys": "",
+    "max_rmsd": 1.0,
+    "skip_distance_calc": false
+   },
+   "code_versions": {
+    "asr": "0.4.1-621ac3332f64089326648c4388ca400035880bc9",
+    "ase": "3.21.0b1-86ac1499d4c7e9097fbf6ca55354f86aea495342",
+    "gpaw": "20.1.1b1-00aedab27b6c2c671f373d057f9defb73f6815ca"
+   },
+   "creates": {}
+  },
+  "strict": null
+ }
+}
