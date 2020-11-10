@@ -62,7 +62,7 @@ def plot():
     plt.scatter(pareto_data_x, pareto_data_y)
     print('Pareto data X=', pareto_data_x)
     print('Pareto data Y=', pareto_data_y)
-    plt.show()
+    # plt.show()
 
 
 if __name__ == '__main__':
