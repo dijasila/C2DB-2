@@ -77,7 +77,7 @@ def run_povray(
         atoms,
         filename=None,
         display=False,
-        canvas_width=1000,
+        # canvas_width=1000,
         rotation='-90x,-30y',
         radii=0.5,
         bondatoms=None,
@@ -100,7 +100,7 @@ def run_povray(
         # transparent=False,
         display=display,
         rotation=rotation,
-        canvas_width=canvas_width,
+        # canvas_width=canvas_width,
         radii=radii,
         bondatoms=bondatoms,
         **kwargs,
@@ -155,8 +155,9 @@ def make_image_of_2D_material_from_multiple_perspectives(atoms,
 
     if filename is None:
         formula = atoms.symbols.formula
-        filename = f'{formula:metal}_perspectives.png'
+        filename = f'{formula:metal}-perspectives.png'
     new_atoms = cut_square_sheet(atoms)
+
     filenames = make_images_from_multiple_perspectives(
         new_atoms,
         rotations=['0x,0y', '-90x', '90y'],
@@ -165,18 +166,19 @@ def make_image_of_2D_material_from_multiple_perspectives(atoms,
     )
 
     images = []
-    for filename in filenames:
-        images.append(PIL.Image.open(filename))
+    for created_filename in filenames:
+        images.append(PIL.Image.open(created_filename))
 
     widths, heights = zip(*(i.size for i in images))
     total_width = widths[0] + widths[2]
     total_height = heights[0] + heights[1]
     new_image = PIL.Image.new('RGBA', (total_width, total_height))
     new_image.paste(images[0], box=(images[2].size[0], 0))
-    new_image.paste(images[1], box=(images[2].size[0], images[1].size[1]))
+    new_image.paste(images[1], box=(images[2].size[0], images[0].size[1]))
     new_image.paste(images[2], box=(0, 0))
+    box = new_image.getbbox()
+    new_image = new_image.crop(box=box)
     new_image.save(filename)
-
 
 
 max_cluster_id = max(clusters)
