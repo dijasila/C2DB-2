@@ -44,6 +44,7 @@ natoms_in_image = 30
 
 
 def cut_out_square_sheet(atoms):
+    """Cut out a square sheet of 2D material."""
     atoms = atoms.repeat((10, 10, 1))
     atoms.center()
     atoms.wrap()
@@ -57,19 +58,56 @@ def cut_out_square_sheet(atoms):
                        in zip(atoms, mask) if thismask])
     return new_atoms
 
-# from ase.build.supercells import make_supercell
-#     lat = atoms.cell.get_bravais_lattice()
-#     eigenvals, eigenvecs = np.linalg.qr(atoms.cell)
-#     print(atoms.symbols)
-#     print('eigenvals', eigenvals)
-#     print('eigenvecs', eigenvecs)
-#     # conv_lat = lat.conventional()
-#     print(lat)
-#     print(lat.conventional_cellmap)
-#     conv_atoms = make_supercell(atoms, lat.conventional_cellmap)
 
-#     return conv_atoms
+def run_povray(
+        atoms,
+        filename=None,
+        display=False,
+        canvas_width=1000,
+        rotation='-90x,-30y',
+        **kwargs,
+):
+    """Run povray and save to file.
 
+    Filename defaults to {formula}.png.
+    """
+    if filename is None:
+        filename = f'{atoms.symbols.formula}.pov'
+    atoms.write(
+        filename=filename,
+        run_povray=True,
+        # background='White',
+        # transparent=False,
+        display=display,
+        rotation=rotation,
+        canvas_width=canvas_width,
+        **kwargs,
+    )
+
+
+def make_multiple_rotation_images(
+        atoms,
+        rotations=['0x,0y', '-90x,-30y'],
+        **kwargs,
+):
+    """Image atomic structure from x, y, and z direction.
+
+    Parameters
+    ----------
+    atoms: Atoms
+        Atomic structure to make figure of.
+    rotations: List[str]
+        Povray camera rotations.
+    kwargs: dict
+        Key word arguments handed through to ase-povray interface.
+
+    """
+    for rotation in rotations:
+        rotation_string = rotation.replace(',', '')
+        run_povray(new_atoms,
+                   filename=f'{atoms.symbols.formula}-{rotation_string}.pov',
+                   rotation=rotation,
+                   **kwargs)
 
 
 max_cluster_id = max(clusters)
@@ -86,25 +124,26 @@ for treated_cluster_id in [1]:  # range(max_cluster_id):
         pareto_data_x.append(row.natoms)
         pareto_data_y.append(row.hform)
         atoms = row.toatoms()
-        atoms = cut_out_square_sheet(atoms)
-        # cell_cv = atoms.cell
-        # natoms_in_image;
-        atoms.write(
-            f'{row.formula}.pov',
-            run_povray=True,
-            # background='White',
-            # transparent=False,
-            display=False,
-            # rotation='-90x,-30y',
-            canvas_width=1000,
-            camera_dist=10,
-            # radii=0.5,
-        )
+        new_atoms = cut_out_square_sheet(atoms)
+        make_multiple_rotation_images(new_atoms)
+        # # cell_cv = atoms.cell
+        # # natoms_in_image;
+        # atoms.write(
+        #     f'{row.formula}.pov',
+        #     run_povray=True,
+        #     # background='White',
+        #     # transparent=False,
+        #     display=False,
+        #     # rotation='-90x,-30y',
+        #     canvas_width=1000,
+        #     camera_dist=10,
+        #     # radii=0.5,
+        # )
 
-    print('cluster_id', treated_cluster_id)
-    print('')
-    plt.figure()
-    plt.title(f'cluster_id={treated_cluster_id}')
-    plt.scatter(pareto_data_x, pareto_data_y)
+    # print('cluster_id', treated_cluster_id)
+    # print('')
+    # plt.figure()
+    # plt.title(f'cluster_id={treated_cluster_id}')
+    # plt.scatter(pareto_data_x, pareto_data_y)
 
 # plt.show()
