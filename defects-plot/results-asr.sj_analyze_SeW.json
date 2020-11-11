@@ -1,0 +1,59 @@
+{
+ "object_id": "asr.sj_analyze::Result",
+ "constructor": "asr.sj_analyze::Result",
+ "args": [],
+ "kwargs": {
+  "data": {
+   "transitions": {
+    "0/1": [
+     -0.09284970800485019,
+     0.01141335033150881,
+     4.905126384227333
+    ],
+    "-1/0": [
+     0.36026474206260317,
+     0.01185316511413248,
+     4.463256381826598
+    ],
+    "-1/-2": [
+     0.7776910021872984,
+     0.010689575919172967,
+     4.026371232649472
+    ],
+    "1/2": [
+     -0.5133812828939311,
+     0.01075143426305658,
+     5.350149734957151
+    ]
+   },
+   "pristine": {
+    "vbm": -0.1657834910718217,
+    "cbm": 1.1322560377955067,
+    "evac": 4.683684458095925
+   },
+   "eform": 3.603
+  },
+  "metadata": {
+   "asr_name": "asr.sj_analyze",
+   "resources": {
+    "time": 674.0411167144775,
+    "ncores": 1,
+    "tstart": 1604919037.975827,
+    "tend": 1604919712.0169437
+   },
+   "params": {},
+   "code_versions": {
+    "asr": "0.4.1-c48741906de4544fc0d4dc6fc33e22c77b94be33",
+    "ase": "3.21.0b1-e5dbb7c82278eafebbe29b0d381862d9422043d2",
+    "gpaw": "20.1.1b1-acb67148a5444cfce7846d26e7b5d3ee27cf3c6c"
+   },
+   "creates": {},
+   "requires": {
+    "sj_+0.5/gs.gpw": "19351bb3e918630f07fd5e026a746726",
+    "sj_-0.5/gs.gpw": "82f79057c5fceab5ab80b69cda7049da",
+    "results-asr.setup.defects.json": "ced71fcce6c06548ec3cd800d50a3909"
+   }
+  },
+  "strict": true
+ }
+}
