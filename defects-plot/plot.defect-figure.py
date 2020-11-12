@@ -31,9 +31,6 @@ def get_b(x, y, a):
     return y - a * x
 
 
-def plot_ks_gapstates(axis):
-    pass
-
 def plot_formation_energies(ax1, ax2):
     defnamelist = ['vW', 'SeW']
     ax = [ax1, ax2]
@@ -52,7 +49,8 @@ def plot_formation_energies(ax1, ax2):
         ax[l].axhline(0, color='black', linestyle='dotted')
 
         ax[l].set_xlim(vbm - 0.1 * gap, cbm + 0.1 * gap)
-        ax[l].set_ylim(-0.1, eform + 0.2 * eform)
+        # ax[l].set_ylim(-0.1, eform + 0.2 * eform)
+        ax[l].set_ylim(-0.1, 4.2)
         e_m = transitions["-1/0"][0] - transitions["-1/0"][1] - transitions["-1/0"][2]
         e_p = transitions["0/1"][0] - transitions["0/1"][1] - transitions["0/1"][2]
         ax[l].plot([vbm, cbm], [eform, eform], color='black')
@@ -109,13 +107,16 @@ def plot_formation_energies(ax1, ax2):
                     print(enlist[i], enlist[i+1], y1, y2, a)
                     ax[l].plot([vbm, cbm], [f(vbm, a, b), f(cbm, a, b)], color='black')
                     ax[l].plot([enlist[i], enlist[i + 1]], [y1, y2], color='black', marker='s')
-        ax[l].set_xlabel('$E_F$ (eV)')
+        ax[l].set_xlabel('$E_F$ [eV]')
+        ax[l].set_xticks([-4.7, -3.7])
         # ax[l].tick_params(axis='both')
         ax2.set_xlim(ax[l].get_xlim())
         ax2.set_xticks(tickslist)
         ax2.set_xticklabels(labellist)
 
-    ax[0].set_ylabel('Formation energy (eV)')
+    # ax[1].set_yticks([])
+    # ax[1].set_yticklabels([])
+    ax[0].set_ylabel('Formation energy [eV]')
     ax[0].text(-4, 0.5, '$v_W$')
     ax[1].text(-4, 0.5, '$Se_W$')
 
@@ -208,10 +209,12 @@ def plot_ks(ax):
     #ax.plot([0.25]*2,[-1,3], '--k')
     #ax.plot([0.75]*2,[-1,3], '--k')
     ax.set_xlim(0,1)
+    ax.set_xticklabels([])
+    ax.set_xticks([])
     ax.set_ylim(evbm-gap/5,ecbm+gap/5)
     ax.set_yticks([0, 1])
     ax.set_yticklabels([0,1])
-    ax.set_ylabel('Energy (eV)')
+    ax.set_ylabel('Energy [eV]')
     #filename = '/home/niflheim/smanti/5-Update/ks-plot/' + calc.atoms.get_chemical_formula()
     #filename = calc.atoms.get_chemical_formula()
 
