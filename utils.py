@@ -1,4 +1,19 @@
-"""Plotting utilities for C2DB version2 paper."""
+"""Plotting utilities for C2DB version2 paper.
+
+In order to import this you have to put something like
+
+p = os.path.abspath('../../')
+if p not in sys.path:
+    sys.path.append(p)
+
+from utils import (
+    cut_square_sheet,
+    make_image_of_2D_material_from_multiple_perspectives
+)
+
+In the top of your script.
+
+"""
 
 from pathlib import Path
 import PIL
