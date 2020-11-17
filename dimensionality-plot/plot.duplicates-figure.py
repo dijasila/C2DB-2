@@ -21,7 +21,7 @@ im = ax.imshow(img)
 plt.text(240, 910, '$N_{2D}^{initial} = 1$', verticalalignment='center', horizontalalignment='center')
 plt.text(240, 1010, '$N_{2D}^{final} = 2$', verticalalignment='center', horizontalalignment='center')
 plt.text(720, 910, '$N_{2D}^{initial} = 1$', verticalalignment='center', horizontalalignment='center')
-plt.text(720, 1010, '$N_{2D}^{final} = 2$', verticalalignment='center', horizontalalignment='center')
+plt.text(720, 1010, '$N_{2D}^{final} = 1$', verticalalignment='center', horizontalalignment='center')
 
 plt.axis('off')
 plt.tight_layout()
