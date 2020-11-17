@@ -1,5 +1,6 @@
 """Functionality to decorate plotting functionality in updated defaults."""
 
+from matplotlib import rcParams
 
 # Customized rc parameters for the c2db_2.0 paper
 rcp = {}
@@ -12,8 +13,15 @@ rcp['text.usetex'] = True
 rcp['font.size'] = 10
 rcp['axes.labelsize'] = 10
 rcp['legend.fontsize'] = 10
-rcp['xtick.labelsize'] = 9
-rcp['ytick.labelsize'] = 9
+rcp['xtick.labelsize'] = 8
+rcp['ytick.labelsize'] = 8
+
+# Provide rcParams for imports
+rcParams.update(rcp)
+
+# Provide columnwidth and textwidth for iop template
+columnwidth = 3.13  # in inches
+textwidth = 6.75  # in inches
 
 
 def plotter(rcp=rcp):
