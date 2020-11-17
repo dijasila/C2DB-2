@@ -82,7 +82,12 @@ def plot():
 
     plt.figure(figsize=(textwidth, columnwidth))
     plt.scatter(pareto_data_x, pareto_data_y, color='k', zorder=2)
-    text = plt.annotate('Excluded region', xy=(9, -0.225), ha='center', va='top')
+    names = ["T'", "T''", "T"]
+
+    for x, y, name in zip(pareto_data_x, pareto_data_y, names):
+        plt.annotate(name, xy=(x, y - 0.02), va='top', ha='center')
+    text = plt.annotate('Excluded region', xy=(9, -0.225),
+                        ha='center', va='top')
 
     text.set_path_effects([path_effects.Stroke(linewidth=4,
                                                foreground='white'),
@@ -94,6 +99,7 @@ def plot():
     ]
     size = [2.5, 0.25]
     padding = [0.25, 0.01]
+
     right_upper_origins = [
         [3 - padding[0], -0.225 - padding[1]],
         [6 - padding[0], -0.5 - padding[1]],
