@@ -18,10 +18,12 @@ fig.set_size_inches(*figsize)
 
 im = ax.imshow(img)
 
-plt.text(750, 180, '$N_{2D}^{initial} = 1$')
-plt.text(750, 280, '$N_{2D}^{final} = 1$')
-plt.text(750, 600, '$N_{2D}^{initial} = 1$')
-plt.text(750, 700, '$N_{2D}^{final} = 2$')
+plt.text(240, 910, '$N_{2D}^{initial} = 1$', verticalalignment='center', horizontalalignment='center')
+plt.text(240, 1010, '$N_{2D}^{final} = 2$', verticalalignment='center', horizontalalignment='center')
+plt.text(720, 910, '$N_{2D}^{initial} = 1$', verticalalignment='center', horizontalalignment='center')
+plt.text(720, 1010, '$N_{2D}^{final} = 2$', verticalalignment='center', horizontalalignment='center')
 
 plt.axis('off')
+plt.tight_layout()
 plt.savefig('dimensionality.png', dpi=300)
+plt.show()
