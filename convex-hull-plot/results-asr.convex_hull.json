@@ -1,0 +1,410 @@
+{
+ "object_id": "asr.convex_hull::Result",
+ "constructor": "asr.convex_hull::Result",
+ "args": [],
+ "kwargs": {
+  "data": {
+   "hform": -0.37082743079533326,
+   "references": [
+    {
+     "hform": -0.228798215562756,
+     "formula": "Bi2Te3",
+     "uid": "Bi2Te3",
+     "natoms": 5,
+     "title": "Bulk crystals (from OQMD123)",
+     "legend": "Bulk crystals",
+     "name": "Bi2Te3",
+     "label": "Bi2Te3",
+     "link": "https://cmrdb.fysik.dtu.dk/oqmd123/row/Bi2Te3",
+     "method": "DFT"
+    },
+    {
+     "hform": -0.19155022860115936,
+     "formula": "Bi6Te6",
+     "uid": "Bi6Te6",
+     "natoms": 12,
+     "title": "Bulk crystals (from OQMD123)",
+     "legend": "Bulk crystals",
+     "name": "Bi6Te6",
+     "label": "Bi6Te6",
+     "link": "https://cmrdb.fysik.dtu.dk/oqmd123/row/Bi6Te6",
+     "method": "DFT"
+    },
+    {
+     "hform": -0.16409007154428576,
+     "formula": "Bi4Te3",
+     "uid": "Bi4Te3",
+     "natoms": 7,
+     "title": "Bulk crystals (from OQMD123)",
+     "legend": "Bulk crystals",
+     "name": "Bi4Te3",
+     "label": "Bi4Te3",
+     "link": "https://cmrdb.fysik.dtu.dk/oqmd123/row/Bi4Te3",
+     "method": "DFT"
+    },
+    {
+     "hform": -0.12876564916480576,
+     "formula": "I32Te8",
+     "uid": "I32Te8",
+     "natoms": 40,
+     "title": "Bulk crystals (from OQMD123)",
+     "legend": "Bulk crystals",
+     "name": "I32Te8",
+     "label": "I32Te8",
+     "link": "https://cmrdb.fysik.dtu.dk/oqmd123/row/I32Te8",
+     "method": "DFT"
+    },
+    {
+     "hform": -0.09285098399794922,
+     "formula": "I4Te4",
+     "uid": "I4Te4",
+     "natoms": 8,
+     "title": "Bulk crystals (from OQMD123)",
+     "legend": "Bulk crystals",
+     "name": "I4Te4",
+     "label": "I4Te4",
+     "link": "https://cmrdb.fysik.dtu.dk/oqmd123/row/I4Te4",
+     "method": "DFT"
+    },
+    {
+     "hform": -0.06415520456254124,
+     "formula": "I8Te16",
+     "uid": "I8Te16",
+     "natoms": 24,
+     "title": "Bulk crystals (from OQMD123)",
+     "legend": "Bulk crystals",
+     "name": "I8Te16",
+     "label": "I8Te16",
+     "link": "https://cmrdb.fysik.dtu.dk/oqmd123/row/I8Te16",
+     "method": "DFT"
+    },
+    {
+     "hform": 0.0,
+     "formula": "Te3",
+     "uid": "Te3",
+     "natoms": 3,
+     "title": "Bulk crystals (from OQMD123)",
+     "legend": "Bulk crystals",
+     "name": "Te3",
+     "label": "Te3",
+     "link": "https://cmrdb.fysik.dtu.dk/oqmd123/row/Te3",
+     "method": "DFT"
+    },
+    {
+     "hform": -0.37415986878789376,
+     "formula": "BiITe",
+     "uid": "BiITe-4000cb0e0319",
+     "natoms": 3,
+     "title": "Bulk crystals (from OQMD123)",
+     "legend": "Bulk crystals",
+     "name": "BiITe",
+     "label": "BiITe",
+     "link": "https://cmrdb.fysik.dtu.dk/oqmd123/row/BiITe-4000cb0e0319",
+     "method": "DFT"
+    },
+    {
+     "hform": -0.4939332285416733,
+     "formula": "Bi2I6",
+     "uid": "Bi2I6",
+     "natoms": 8,
+     "title": "Bulk crystals (from OQMD123)",
+     "legend": "Bulk crystals",
+     "name": "Bi2I6",
+     "label": "Bi2I6",
+     "link": "https://cmrdb.fysik.dtu.dk/oqmd123/row/Bi2I6",
+     "method": "DFT"
+    },
+    {
+     "hform": 0.0,
+     "formula": "I4",
+     "uid": "I4",
+     "natoms": 4,
+     "title": "Bulk crystals (from OQMD123)",
+     "legend": "Bulk crystals",
+     "name": "I4",
+     "label": "I4",
+     "link": "https://cmrdb.fysik.dtu.dk/oqmd123/row/I4",
+     "method": "DFT"
+    },
+    {
+     "hform": 0.0,
+     "formula": "Bi2",
+     "uid": "Bi2",
+     "natoms": 2,
+     "title": "Bulk crystals (from OQMD123)",
+     "legend": "Bulk crystals",
+     "name": "Bi2",
+     "label": "Bi2",
+     "link": "https://cmrdb.fysik.dtu.dk/oqmd123/row/Bi2",
+     "method": "DFT"
+    },
+    {
+     "hform": 0.08408467640855743,
+     "formula": "Bi2Te2",
+     "uid": "Bi2Te2-e8745fba5aa7",
+     "natoms": 4,
+     "title": "Monolayers (from C2DB)",
+     "legend": "Monolayers",
+     "name": "Bi2Te2 (AB-12-i)",
+     "label": "Bi2Te2 (AB-12-i)",
+     "link": "/c2db/row/Bi2Te2-e8745fba5aa7",
+     "method": "DFT"
+    },
+    {
+     "hform": -0.37082743079533326,
+     "formula": "BiITe",
+     "uid": "BiITe-2d41b3dd1772",
+     "natoms": 3,
+     "title": "Monolayers (from C2DB)",
+     "legend": "Monolayers",
+     "name": "BiITe (ABC-156-abc)",
+     "label": "BiITe (ABC-156-abc)",
+     "link": "/c2db/row/BiITe-2d41b3dd1772",
+     "method": "DFT"
+    },
+    {
+     "hform": 0.10271200123693862,
+     "formula": "Bi2Te4",
+     "uid": "Bi2Te4-f9660a14004c",
+     "natoms": 6,
+     "title": "Monolayers (from C2DB)",
+     "legend": "Monolayers",
+     "name": "Bi2Te4 (AB2-10-aemn)",
+     "label": "Bi2Te4 (AB2-10-aemn)",
+     "link": "/c2db/row/Bi2Te4-f9660a14004c",
+     "method": "DFT"
+    },
+    {
+     "hform": -0.2607918427184674,
+     "formula": "BiITe",
+     "uid": "BiITe-a84d988e38ac",
+     "natoms": 3,
+     "title": "Monolayers (from C2DB)",
+     "legend": "Monolayers",
+     "name": "BiITe (ABC-156-ac)",
+     "label": "BiITe (ABC-156-ac)",
+     "link": "/c2db/row/BiITe-a84d988e38ac",
+     "method": "DFT"
+    },
+    {
+     "hform": 0.09702125056730952,
+     "formula": "BiTe2",
+     "uid": "BiTe2-7fb7af445756",
+     "natoms": 3,
+     "title": "Monolayers (from C2DB)",
+     "legend": "Monolayers",
+     "name": "BiTe2 (AB2-187-ai)",
+     "label": "BiTe2 (AB2-187-ai)",
+     "link": "/c2db/row/BiTe2-7fb7af445756",
+     "method": "DFT"
+    },
+    {
+     "hform": 0.027565593509843556,
+     "formula": "Bi2Te2",
+     "uid": "Bi2Te2-23a0796492d1",
+     "natoms": 4,
+     "title": "Monolayers (from C2DB)",
+     "legend": "Monolayers",
+     "name": "Bi2Te2 (AB-1-a)",
+     "label": "Bi2Te2 (AB-1-a)",
+     "link": "/c2db/row/Bi2Te2-23a0796492d1",
+     "method": "DFT"
+    },
+    {
+     "hform": 0.23085324119523185,
+     "formula": "BiTe2",
+     "uid": "BiTe2-a04fda8c900e",
+     "natoms": 3,
+     "title": "Monolayers (from C2DB)",
+     "legend": "Monolayers",
+     "name": "BiTe2 (AB2-115-dg)",
+     "label": "BiTe2 (AB2-115-dg)",
+     "link": "/c2db/row/BiTe2-a04fda8c900e",
+     "method": "DFT"
+    },
+    {
+     "hform": 0.2525177429907819,
+     "formula": "Bi2Te2",
+     "uid": "Bi2Te2-6802e9b199ab",
+     "natoms": 4,
+     "title": "Monolayers (from C2DB)",
+     "legend": "Monolayers",
+     "name": "Bi2Te2 (AB-123-bd)",
+     "label": "Bi2Te2 (AB-123-bd)",
+     "link": "/c2db/row/Bi2Te2-6802e9b199ab",
+     "method": "DFT"
+    },
+    {
+     "hform": 0.009495637692229645,
+     "formula": "BiTe2",
+     "uid": "BiTe2-dc7772c93068",
+     "natoms": 3,
+     "title": "Monolayers (from C2DB)",
+     "legend": "Monolayers",
+     "name": "BiTe2 (AB2-164-bd)",
+     "label": "BiTe2 (AB2-164-bd)",
+     "link": "/c2db/row/BiTe2-dc7772c93068",
+     "method": "DFT"
+    },
+    {
+     "hform": -0.22834808395353717,
+     "formula": "Bi2Te3",
+     "uid": "Bi2Te3-61e21cf8e36d",
+     "natoms": 5,
+     "title": "Monolayers (from C2DB)",
+     "legend": "Monolayers",
+     "name": "Bi2Te3 (A2B3-2-fi)",
+     "label": "Bi2Te3 (A2B3-2-fi)",
+     "link": "/c2db/row/Bi2Te3-61e21cf8e36d",
+     "method": "DFT"
+    },
+    {
+     "hform": 0.1433439196990669,
+     "formula": "Bi2Te2",
+     "uid": "Bi2Te2-b09aeba0e3ce",
+     "natoms": 4,
+     "title": "Monolayers (from C2DB)",
+     "legend": "Monolayers",
+     "name": "Bi2Te2 (AB-187-hi)",
+     "label": "Bi2Te2 (AB-187-hi)",
+     "link": "/c2db/row/Bi2Te2-b09aeba0e3ce",
+     "method": "DFT"
+    },
+    {
+     "hform": -0.4139485434133574,
+     "formula": "Bi2I6",
+     "uid": "Bi2I6-01a2d5e89adc",
+     "natoms": 8,
+     "title": "Monolayers (from C2DB)",
+     "legend": "Monolayers",
+     "name": "Bi2I6 (AB3-150-dg)",
+     "label": "Bi2I6 (AB3-150-dg)",
+     "link": "/c2db/row/Bi2I6-01a2d5e89adc",
+     "method": "DFT"
+    },
+    {
+     "hform": -0.49466429095933595,
+     "formula": "Bi2I6",
+     "uid": "Bi2I6-433fccc74b5d",
+     "natoms": 8,
+     "title": "Monolayers (from C2DB)",
+     "legend": "Monolayers",
+     "name": "Bi2I6 (AB3-147-dg)",
+     "label": "Bi2I6 (AB3-147-dg)",
+     "link": "/c2db/row/Bi2I6-433fccc74b5d",
+     "method": "DFT"
+    },
+    {
+     "hform": -0.03376021462017794,
+     "formula": "BiI2",
+     "uid": "BiI2-a000539092c6",
+     "natoms": 3,
+     "title": "Monolayers (from C2DB)",
+     "legend": "Monolayers",
+     "name": "BiI2 (AB2-164-bd)",
+     "label": "BiI2 (AB2-164-bd)",
+     "link": "/c2db/row/BiI2-a000539092c6",
+     "method": "DFT"
+    },
+    {
+     "hform": -0.1294356990552187,
+     "formula": "BiI2",
+     "uid": "BiI2-aa3debf907f3",
+     "natoms": 3,
+     "title": "Monolayers (from C2DB)",
+     "legend": "Monolayers",
+     "name": "BiI2 (AB2-187-ai)",
+     "label": "BiI2 (AB2-187-ai)",
+     "link": "/c2db/row/BiI2-aa3debf907f3",
+     "method": "DFT"
+    },
+    {
+     "hform": -0.017875088265866257,
+     "formula": "Bi2I2",
+     "uid": "Bi2I2-28fdf409d79d",
+     "natoms": 4,
+     "title": "Monolayers (from C2DB)",
+     "legend": "Monolayers",
+     "name": "Bi2I2 (AB-129-bc)",
+     "label": "Bi2I2 (AB-129-bc)",
+     "link": "/c2db/row/Bi2I2-28fdf409d79d",
+     "method": "DFT"
+    },
+    {
+     "hform": -0.016464259558867766,
+     "formula": "BiI2",
+     "uid": "BiI2-b6ca2c91eff5",
+     "natoms": 3,
+     "title": "Monolayers (from C2DB)",
+     "legend": "Monolayers",
+     "name": "BiI2 (AB2-115-ag)",
+     "label": "BiI2 (AB2-115-ag)",
+     "link": "/c2db/row/BiI2-b6ca2c91eff5",
+     "method": "DFT"
+    },
+    {
+     "hform": -0.17144752796758,
+     "formula": "Bi2I2",
+     "uid": "Bi2I2-c3fa8fd438b6",
+     "natoms": 4,
+     "title": "Monolayers (from C2DB)",
+     "legend": "Monolayers",
+     "name": "Bi2I2 (AB-1-a)",
+     "label": "Bi2I2 (AB-1-a)",
+     "link": "/c2db/row/Bi2I2-c3fa8fd438b6",
+     "method": "DFT"
+    },
+    {
+     "hform": 0.10122034140523173,
+     "formula": "Bi2",
+     "uid": "Bi2-e50c9fb190b0",
+     "natoms": 2,
+     "title": "Monolayers (from C2DB)",
+     "legend": "Monolayers",
+     "name": "Bi2 (A-164-d)",
+     "label": "Bi2 (A-164-d)",
+     "link": "/c2db/row/Bi2-e50c9fb190b0",
+     "method": "DFT"
+    }
+   ],
+   "indices": [
+    7,
+    0,
+    6
+   ],
+   "coefs": [
+    1.0,
+    0.0,
+    -0.0
+   ],
+   "ehull": 0.0033324379925604997,
+   "thermodynamic_stability_level": 3
+  },
+  "metadata": {
+   "asr_name": "asr.convex_hull",
+   "resources": {
+    "time": 9.660631656646729,
+    "ncores": 1,
+    "tstart": 1603376747.0949821,
+    "tend": 1603376756.7556138
+   },
+   "params": {
+    "databases": [
+     "/home/niflheim2/cmr/databases/referencedatabases/oqmd123.db",
+     "/home/niflheim2/cmr/C2DB-ASR/collected-databases/references-c2db.db"
+    ]
+   },
+   "code_versions": {
+    "asr": "0.3.2-800b206d9d1d5469c85a6281b97522f0909821f4",
+    "ase": "3.21.0b1-42b285c569c415257a68b21c46b7c235c1386dcb",
+    "gpaw": "20.1.1b1-a145cd2cddd62bf5d79c4b55c607e8e8685d28d5"
+   },
+   "creates": {},
+   "requires": {
+    "results-asr.structureinfo.json": "f75265564a8cdbedf9b1605ad7ddf421",
+    "results-asr.database.material_fingerprint.json": "16bf20b43bb9ac6816e47a861eafde91"
+   }
+  },
+  "strict": true
+ }
+}

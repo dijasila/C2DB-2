@@ -1,0 +1,16 @@
+{
+ "asr_id": "2d41b3dd1772eca3dcd19f7f659d09f7",
+ "uid": "BiITe-2d41b3dd1772",
+ "__key_descriptions__": {
+  "asr_id": "KVP: Material fingerprint",
+  "uid": "KVP: Unique identifier"
+ },
+ "__asr_name__": "asr.database.material_fingerprint",
+ "__creates__": {},
+ "__params__": {},
+ "__versions__": {
+  "asr": "19.11.18-dc5c988a8fff72b4b016201898bf004b7108d44d",
+  "ase": "3.19.0b1-f30291ce5996f9e691582f07ec116333331e2514",
+  "gpaw": "19.8.2b1-6ac6255b9a19ad6380d0fa4d69e5e98f4344dcc4"
+ }
+}
