@@ -6,6 +6,15 @@ from gpaw import GPAW
 from ase.dft.bandgap import bandgap
 from matplotlib.gridspec import GridSpec
 
+import os
+import sys
+p = os.path.abspath('/home/niflheim/fafb/papers/c2db2/c2db-version-2/')
+
+if p not in sys.path:
+    sys.path.append(p)
+
+from rcparams import rcParams, textwidth
+
 def f(x, a, b):
     return a * x + b
 
@@ -289,6 +298,8 @@ def plot_cc(ax):
 # axform2 = fig.add_subplot(gs[0:2, 3:4])
 
 fig = plt.figure(constrained_layout=True)
+figsize = (textwidth, 5.)
+fig.set_size_inches(*figsize)
 gs = GridSpec(6, 8, figure=fig)
 axform1 = fig.add_subplot(gs[:3, 4:6])
 axform2 = fig.add_subplot(gs[:3, 6:])
