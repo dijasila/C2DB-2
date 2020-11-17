@@ -218,12 +218,18 @@ def plot_ks(ax):
     #ax.plot([0.25]*2,[-1,3], '--k')
     #ax.plot([0.75]*2,[-1,3], '--k')
     ax.set_xlim(0,1)
+    ax.set_xticks([0,1])
     ax.set_xticklabels([])
-    ax.set_xticks([])
     ax.set_ylim(evbm-gap/5,ecbm+gap/5)
     #ax.set_yticks([0, 1])
     #ax.set_yticklabels([0,1])
     ax.set_ylabel('Energy [eV]')
+    delta = 0.02
+    ax.text(0.30 + delta, -2.74, '$a_2$', horizontalalignment='left')
+    ax.text(0.198 - delta, -3.14, '$a_1$', horizontalalignment='right')
+    ax.text(0.80 + delta, -1.32, '$a_2$', horizontalalignment='left')
+    ax.text(0.70 - delta, -1.91, '$a_1$', horizontalalignment='right')
+    # ax.text(-2.7, 1, '$a_1$', verticalalignment='center')
     #filename = '/home/niflheim/smanti/5-Update/ks-plot/' + calc.atoms.get_chemical_formula()
     #filename = calc.atoms.get_chemical_formula()
 
@@ -236,8 +242,8 @@ def plot_cc(ax):
     x2 = np.linspace(-0.8, 1.2, 100)
     delta = 0.05
     arrow_params = {'shape': 'full', 'color': 'black', 'width': 0.015, 'length_includes_head': True, 'head_length': 0.1}
-    ax.arrow(0.6, 2 - delta, -0.6, -2 + delta, **arrow_params)
-    ax.arrow(0, 0 + delta, 0.6, 2 - delta, **arrow_params)
+    ax.arrow(0.6, 2, -0.6, -2, **arrow_params)
+    #ax.arrow(0, 0 + delta, 0.6, 2 - delta, **arrow_params)
     ax.arrow(0, 0, 0, 2.35, **arrow_params)
     ax.arrow(1.2, 2 + delta, 0, 0.35 - delta, **arrow_params)
     ax.arrow(1.2, 2.35 - delta, 0, -0.35 + delta, **arrow_params)
@@ -245,10 +251,10 @@ def plot_cc(ax):
     ax.arrow(-0.6, 0.35 - delta, 0, -0.35 + delta, **arrow_params)
     ax.text(-0.8, 2.5, '$D_{excited}$', color='C1')
     ax.text(1.1, 0.5, '$D_{ground}$', color='C0')
-    ax.text(1.2 + delta, 2.1725, '$E_{exc}^{reorg}$', verticalalignment='center', horizontalalignment='left')
-    ax.text(0.6 + delta, 1.0, '$E_{ZPL} = 3.84$ [eV]', verticalalignment='center', horizontalalignment='left')
+    ax.text(1.2 + delta, 2.1725, '$\lambda_{exc}^{reorg}$', verticalalignment='center', horizontalalignment='left')
+    ax.text(0.55 + delta, 1.35, '$E_{ZPL} = 3.84$ eV', verticalalignment='center', horizontalalignment='left')
     ax.text(0.0 - delta, 1.1725, 'Excitation', verticalalignment='center', horizontalalignment='right', rotation=90)
-    ax.text(-0.6 - delta, 0.1725, '$E_{gs}^{reorg}$', verticalalignment='center', horizontalalignment='right')
+    ax.text(-0.6 - delta, 0.1725, '$\lambda_{gs}^{reorg}$', verticalalignment='center', horizontalalignment='right')
     ax.plot(x1, parabola(x1))
     ax.plot(x1 + 0.6, parabola(x1)+2)
     ax.set_xticks([], [])
@@ -260,6 +266,16 @@ def plot_cc(ax):
     ax.set_ylabel("Energy")
     ax.axhline(0, linestyle='dotted', color='black')
     ax.axhline(2, linestyle='dotted', color='black')
+
+
+def plot_structures(ax):
+    import matplotlib.image as mpimg
+
+    img = mpimg.imread('supercell.png')
+    imgplot = ax.imshow(img)
+    circle = plt.Circle((790, 470), 80, color='r', fill=False)
+    ax.add_artist(circle)
+    ax.axis('off')
 
 
 # fig, axs = plt.subplots(ncols=4, nrows=4)
@@ -305,10 +321,12 @@ axform1 = fig.add_subplot(gs[:3, 4:6])
 axform2 = fig.add_subplot(gs[:3, 6:])
 axexc = fig.add_subplot(gs[3:, :4])
 axks = fig.add_subplot(gs[3:, 4:])
+axim = fig.add_subplot(gs[:3, :4])
 
-#plot_formation_energies(axform1, axform2)
-#plot_ks(axks)
+plot_formation_energies(axform1, axform2)
+plot_ks(axks)
 plot_cc(axexc)
+plot_structures(axim)
 plt.tight_layout()
 plt.savefig('defects.pdf')
 plt.show()
