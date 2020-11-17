@@ -34,9 +34,9 @@ def make_pareto_lines(x_p, y_p):
         all_x.extend([x1, x2])
         all_y.extend([y, y])
 
-    plt.plot(all_x, all_y, color='k', ls='--')
-    plt.fill_between(all_x, all_y, 1, facecolor='none', edgecolor='C3', hatch='X',
-                     linewidth=0.0)
+    plt.plot(all_x, all_y, color='k', ls='--', label='Pareto optimal')
+    plt.fill_between(all_x, all_y, 1, facecolor='none', edgecolor='C3', hatch='XXX',
+                     linewidth=0.0, zorder=-1, label='Excluded region')
 
 
 @plotter()
@@ -81,17 +81,18 @@ def plot():
         # make_image_of_2D_material_from_multiple_perspectives(atoms)
 
     plt.figure(figsize=(textwidth, columnwidth))
+    make_pareto_lines(pareto_data_x, pareto_data_y)
     plt.scatter(pareto_data_x, pareto_data_y, color='k', zorder=2)
     names = ["T'", "T''", "T"]
 
     for x, y, name in zip(pareto_data_x, pareto_data_y, names):
         plt.annotate(name, xy=(x, y - 0.02), va='top', ha='center')
-    text = plt.annotate('Excluded region', xy=(9, -0.225),
-                        ha='center', va='top')
+    # text = plt.annotate('Excluded region', xy=(9, -0.225),
+    #                     ha='center', va='top')
 
-    text.set_path_effects([path_effects.Stroke(linewidth=4,
-                                               foreground='white'),
-                           path_effects.Normal()])
+    # text.set_path_effects([path_effects.Stroke(linewidth=4,
+    #                                            foreground='white'),
+    #                        path_effects.Normal()])
     filenames = [
         'ReS2-perspectives.png',
         'Re2S4-perspectives.png',
@@ -111,15 +112,14 @@ def plot():
         img = plt.imread(filename)
         ax.imshow(img, aspect='auto', extent=bbox, interpolation='gaussian')
 
-    plt.annotate('Pareto optimal', xy=(8, -0.525), ha='center', va='top')
+    # plt.annotate('Pareto optimal', xy=(8, -0.525), ha='center', va='top')
     plt.xlabel('Number of atoms')
     plt.ylabel('HOF [eV/atom]')
     plt.xlim(0, 13)
     plt.xticks(range(0, 14))
-    make_pareto_lines(pareto_data_x, pareto_data_y)
+    plt.legend()  # facecolor='w', framealpha=1)
     plt.ylim(-0.8, -0.19)
     plt.tight_layout()
-
     plt.savefig('pareto.pdf', dpi=300)
 
     # pareto_image = PIL.Image.open('pareto.png')
