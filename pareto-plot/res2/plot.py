@@ -103,8 +103,7 @@ def plot():
     for filename, origin in zip(filenames, right_upper_origins):
         bbox = [origin[0] - size[0], origin[0], origin[1] - size[1], origin[1]]
         img = plt.imread(filename)
-        ax.imshow(img, aspect='auto', extent=bbox)
-
+        ax.imshow(img, aspect='auto', extent=bbox, interpolation='gaussian')
 
     plt.annotate('Pareto optimal', xy=(8, -0.525), ha='center', va='top')
     plt.xlabel('Number of atoms')
@@ -115,7 +114,7 @@ def plot():
     plt.ylim(-0.8, -0.19)
     plt.tight_layout()
 
-    plt.savefig('pareto.png', dpi=300)
+    plt.savefig('pareto.pdf', dpi=300)
 
     # pareto_image = PIL.Image.open('pareto.png')
     # pareto_width, pareto_height = pareto_image.size
