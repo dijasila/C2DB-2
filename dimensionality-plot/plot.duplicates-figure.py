@@ -24,4 +24,4 @@ plt.text(750, 600, '$N_{2D}^{initial} = 1$')
 plt.text(750, 700, '$N_{2D}^{final} = 2$')
 
 plt.axis('off')
-plt.savefig('dimensionality.pdf')
+plt.savefig('dimensionality.png', dpi=300)
