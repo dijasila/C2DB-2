@@ -1,0 +1,49 @@
+{
+ "object_id": "asr.sj_analyze::Result",
+ "constructor": "asr.sj_analyze::Result",
+ "args": [],
+ "kwargs": {
+  "data": {
+   "transitions": {
+    "-1/0": [
+     0.49517492155870935,
+     0.03084778386516973,
+     2.2686204169705935
+    ],
+    "0/1": [
+     -3.159700806457788,
+     0.006897291935047178,
+     1.987002478815795
+    ]
+   },
+   "pristine": {
+    "vbm": -3.21830444155594,
+    "cbm": 0.566944440559792,
+    "evac": 2.050152894166183
+   },
+   "eform": 8.27
+  },
+  "metadata": {
+   "asr_name": "asr.sj_analyze",
+   "resources": {
+    "time": 526.9248297214508,
+    "ncores": 1,
+    "tstart": 1605626190.3144712,
+    "tend": 1605626717.239301
+   },
+   "params": {},
+   "code_versions": {
+    "asr": "0.4.1-3234b51327a47f5f8f1ff013a9d5774f27f1847b",
+    "ase": "3.21.0b1-f5b272a96c4da0d1c250c146acf55f5bf51fd1a9",
+    "gpaw": "20.10.1b1-7ff8d570c9d25f2af1c40c00271000e3ab505f1c"
+   },
+   "creates": {},
+   "requires": {
+    "sj_+0.5/gs.gpw": "442cf7d37b7d9a32641af664ceddac7a",
+    "sj_-0.5/gs.gpw": "9bf1ed8da214604390bc0643db15bc72",
+    "results-asr.setup.defects.json": "41d5993d42a5694aafdc37d50d2b3130"
+   }
+  },
+  "strict": true
+ }
+}
