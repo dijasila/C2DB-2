@@ -31,7 +31,7 @@ def plot_formation_energies(defname, fname):
     from asr.core import read_json
 
     fig, ax = plt.subplots(1, 2)
-    defnamelist = ['vW', 'SeW']
+    defnamelist = ['vC', 'CSi']
     for l in [0, 1]:
         data = read_json(f'results-asr.sj_analyze_{defnamelist[l]}.json')
 

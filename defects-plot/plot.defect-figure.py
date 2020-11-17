@@ -41,7 +41,7 @@ def get_b(x, y, a):
 
 
 def plot_formation_energies(ax1, ax2):
-    defnamelist = ['vW', 'SeW']
+    defnamelist = ['vC', 'CSi']
     ax = [ax1, ax2]
     for l in [0, 1]:
         data = read_json(f'results-asr.sj_analyze_{defnamelist[l]}.json')
@@ -58,8 +58,8 @@ def plot_formation_energies(ax1, ax2):
         ax[l].axhline(0, color='black', linestyle='dotted')
 
         ax[l].set_xlim(vbm - 0.1 * gap, cbm + 0.1 * gap)
-        # ax[l].set_ylim(-0.1, eform + 0.2 * eform)
-        ax[l].set_ylim(-0.1, 4.2)
+        ax[l].set_ylim(-0.1, eform + 0.2 * eform)
+        #ax[l].set_ylim(-0.1, 9.2)
         e_m = transitions["-1/0"][0] - transitions["-1/0"][1] - transitions["-1/0"][2]
         e_p = transitions["0/1"][0] - transitions["0/1"][1] - transitions["0/1"][2]
         ax[l].plot([vbm, cbm], [eform, eform], color='black')
@@ -108,16 +108,16 @@ def plot_formation_energies(ax1, ax2):
                 elif not name.split('/')[0].startswith('-'):
                     tickslist.append(energy)
                     labellist.append(name)
-                    a = float(name.split('/')[0])
+                    a = float(name.split('/')[1])
                     b = get_b(enlist[i], y1, a)
                     if y2 is None:
                         y2 = f(enlist[i], a, b)
                     y1 = f(enlist[i + 1], a, b)
                     print(enlist[i], enlist[i+1], y1, y2, a)
                     ax[l].plot([vbm, cbm], [f(vbm, a, b), f(cbm, a, b)], color='black')
-                    ax[l].plot([enlist[i], enlist[i + 1]], [y1, y2], color='black', marker='s')
+                    ax[l].plot([enlist[i + 1], enlist[i]], [y1, y2], color='black', marker='s')
         ax[l].set_xlabel('$E_F$ [eV]')
-        ax[l].set_xticks([-4.7, -3.7])
+        # ax[l].set_xticks([-4.7, -3.7])
         # ax[l].tick_params(axis='both')
         ax2.set_xlim(ax[l].get_xlim())
         ax2.set_xticks(tickslist)
@@ -126,8 +126,8 @@ def plot_formation_energies(ax1, ax2):
     # ax[1].set_yticks([])
     # ax[1].set_yticklabels([])
     ax[0].set_ylabel('Formation energy [eV]')
-    ax[0].text(-4, 0.5, '$v_W$')
-    ax[1].text(-4, 0.5, '$Se_W$')
+    ax[0].text(-4, 0.5, '$v_C$')
+    ax[1].text(-4, 0.5, '$C_{Si}$')
 
 
 def get_edge():
@@ -221,8 +221,8 @@ def plot_ks(ax):
     ax.set_xticklabels([])
     ax.set_xticks([])
     ax.set_ylim(evbm-gap/5,ecbm+gap/5)
-    ax.set_yticks([0, 1])
-    ax.set_yticklabels([0,1])
+    #ax.set_yticks([0, 1])
+    #ax.set_yticklabels([0,1])
     ax.set_ylabel('Energy [eV]')
     #filename = '/home/niflheim/smanti/5-Update/ks-plot/' + calc.atoms.get_chemical_formula()
     #filename = calc.atoms.get_chemical_formula()
@@ -236,8 +236,8 @@ def plot_cc(ax):
     x2 = np.linspace(-0.8, 1.2, 100)
     delta = 0.05
     arrow_params = {'shape': 'full', 'color': 'black', 'width': 0.015, 'length_includes_head': True, 'head_length': 0.1}
-    ax.arrow(0.6, 2 - delta, 0, -2 + delta, **arrow_params)
-    ax.arrow(0.6, 0 + delta, 0, 2 - delta, **arrow_params)
+    ax.arrow(0.6, 2 - delta, -0.6, -2 + delta, **arrow_params)
+    ax.arrow(0, 0 + delta, 0.6, 2 - delta, **arrow_params)
     ax.arrow(0, 0, 0, 2.35, **arrow_params)
     ax.arrow(1.2, 2 + delta, 0, 0.35 - delta, **arrow_params)
     ax.arrow(1.2, 2.35 - delta, 0, -0.35 + delta, **arrow_params)
@@ -246,7 +246,7 @@ def plot_cc(ax):
     ax.text(-0.8, 2.5, '$D_{excited}$', color='C1')
     ax.text(1.1, 0.5, '$D_{ground}$', color='C0')
     ax.text(1.2 + delta, 2.1725, '$E_{exc}^{reorg}$', verticalalignment='center', horizontalalignment='left')
-    ax.text(0.6 + delta, 1.0, '$E_{ZPL}$', verticalalignment='center', horizontalalignment='left')
+    ax.text(0.6 + delta, 1.0, '$E_{ZPL} = 3.84$ [eV]', verticalalignment='center', horizontalalignment='left')
     ax.text(0.0 - delta, 1.1725, 'Excitation', verticalalignment='center', horizontalalignment='right', rotation=90)
     ax.text(-0.6 - delta, 0.1725, '$E_{gs}^{reorg}$', verticalalignment='center', horizontalalignment='right')
     ax.plot(x1, parabola(x1))
@@ -306,8 +306,8 @@ axform2 = fig.add_subplot(gs[:3, 6:])
 axexc = fig.add_subplot(gs[3:, :4])
 axks = fig.add_subplot(gs[3:, 4:])
 
-plot_formation_energies(axform1, axform2)
-plot_ks(axks)
+#plot_formation_energies(axform1, axform2)
+#plot_ks(axks)
 plot_cc(axexc)
 plt.tight_layout()
 plt.savefig('defects.pdf')
