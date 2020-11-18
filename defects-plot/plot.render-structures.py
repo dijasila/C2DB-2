@@ -9,7 +9,7 @@ if p not in sys.path:
 from utils import cut_square_sheet, make_image_of_2D_material_from_multiple_perspectives, run_povray
 from ase.io import read
 
-structures = ['primitive', 'defect_CSi']
+structures = ['primitive', 'defect_vSi']
 for name in structures:
     atoms = read(name + '.json')
     # atoms = cut_square_sheet(atoms)
