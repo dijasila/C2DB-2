@@ -275,8 +275,8 @@ def plot_structures(ax):
 
     img = mpimg.imread('supercell.png')
     imgplot = ax.imshow(img)
-    circle = plt.Circle((1580, 940), 80, color='r', fill=False)
-    ax.add_artist(circle)
+    #circle = plt.Circle((1580, 940), 80, color='r', fill=False)
+    #ax.add_artist(circle)
     ax.axis('off')
 
 
