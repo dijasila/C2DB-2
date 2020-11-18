@@ -118,6 +118,7 @@ def plot_formation_energies(ax1, ax2):
                     ax[l].plot([enlist[i + 1], enlist[i]], [y1, y2], color='black', marker='s')
         ax[l].set_xlabel('$E_F$ [eV]')
         # ax[l].set_xticks([-4.7, -3.7])
+        ax[l].set_ylim(-0.1, 2.6)
         # ax[l].tick_params(axis='both')
         ax2.set_xlim(ax[l].get_xlim())
         ax2.set_xticks(tickslist)
@@ -274,10 +275,19 @@ def plot_structures(ax):
     import matplotlib.image as mpimg
 
     img = mpimg.imread('supercell.png')
-    imgplot = ax.imshow(img)
+    imgplot = ax.imshow(img, interpolation='gaussian')
     #circle = plt.Circle((1580, 940), 80, color='r', fill=False)
     #ax.add_artist(circle)
     ax.axis('off')
+
+def append_label(ax, letter='a'):
+    xlim = ax.get_xlim()
+    ylim = ax.get_ylim()
+    print(xlim, ylim)
+    if letter == 'a':
+        ax.text(xlim[0] - 0.12*abs(xlim[0] - xlim[1]), ylim[1] - 0.1*abs(ylim[0] - ylim[1]), letter, horizontalalignment='right', verticalalignment='top', weight='bold')
+    else:
+        ax.text(xlim[0] - 0.12*abs(xlim[0] - xlim[1]), ylim[1] + 0.1*abs(ylim[0] - ylim[1]), letter, horizontalalignment='right', verticalalignment='top', weight='bold')
 
 
 # fig, axs = plt.subplots(ncols=4, nrows=4)
@@ -324,11 +334,21 @@ axform2 = fig.add_subplot(gs[:3, 6:])
 axexc = fig.add_subplot(gs[3:, :4])
 axks = fig.add_subplot(gs[3:, 4:])
 axim = fig.add_subplot(gs[:3, :4])
+axform_help = fig.add_subplot(gs[:3, 4:])
+axform_help.axis('off')
+
 
 plot_formation_energies(axform1, axform2)
 plot_ks(axks)
 plot_cc(axexc)
 plot_structures(axim)
+
+# labelsp
+append_label(axim, 'a')
+append_label(axform_help, 'b')
+append_label(axexc, 'c')
+append_label(axks, 'd')
+
 plt.tight_layout()
 plt.savefig('defects.pdf')
 plt.show()
