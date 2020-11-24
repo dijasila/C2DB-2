@@ -3,8 +3,7 @@ from asr.convex_hull import convex_hull_tables, Result
 
 from asr.core.material import (get_material_from_folder,
                                make_panel_figures)
-from asr.core import prepare_result, ASRResult, read_json
-import typing
+from asr.core import read_json
 import os
 import sys
 
@@ -88,9 +87,17 @@ def plot(row, fname, thisrow):
     fig = plt.figure(figsize=(columnwidth, columnwidth))
     ax = fig.gca()
 
+    legendhandles = []
+
+    for it, label in enumerate(['On hull', 'off hull']):
+        handle = ax.scatter([], [], facecolor='none', marker='o',
+                            edgecolor=f'C{it + 2}', label=label, s=5**2)
+        legendhandles.append(handle)
+
     for it, legend in enumerate(legends):
-        ax.scatter([], [], facecolor='none', marker='o',
-                   edgecolor=f'C{it + 2}', label=legend, s=(3 + it * 3)**2)
+        handle = ax.scatter([], [], facecolor='none', marker='o',
+                            edgecolor='k', label=legend, s=(3 + it * 3)**2)
+        legendhandles.append(handle)
 
     if len(count) == 2:
         x, e, _, hull, simplices, xlabel, ylabel = pd.plot2d2()
@@ -131,7 +138,8 @@ def plot(row, fname, thisrow):
         latexnames = [format(Formula(name.split(' ')[0]).reduce()[0], 'latex') for name in names]
         for i, j, k in simplices:
             ax.plot(x[[i, j, k, i]], y[[i, j, k, i]], '-', color='lightblue')
-        ax.scatter(x, y, facecolor='none', marker='o', edgecolor=colors, s=sizes,
+        edgecolors = ['C2' if on_hull else 'C3' for on_hull in hull]
+        ax.scatter(x, y, facecolor='none', marker='o', edgecolor=edgecolors, s=sizes,
                    zorder=10)
 
         for a, b, name, on_hull in zip(x, y, latexnames, hull):
@@ -141,10 +149,15 @@ def plot(row, fname, thisrow):
         bfrac = count.get(B, 0) / sum(count.values())
         cfrac = count.get(C, 0) / sum(count.values())
 
-        # ax.plot([bfrac + cfrac / 2],
-        #         [cfrac * 3**0.5 / 2],
-        #         'o', color='C1', label=f'{thisrow.formula}')
-        plt.legend(loc='upper right', handletextpad=0)
+        from matplotlib.legend_handler import HandlerLine2D, HandlerTuple
+
+        newlegendhandles = [(legendhandles[0], legendhandles[1]),
+                            legendhandles[2], legendhandles[3]]
+        plt.legend(
+            newlegendhandles,
+            ['On/off hull',
+             legends[0], legends[1]], loc='upper left', handletextpad=0,
+            handler_map={tuple: HandlerTuple(ndivide=None)})
         plt.axis('off')
 
     plt.tight_layout()
