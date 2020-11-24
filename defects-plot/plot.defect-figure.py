@@ -127,8 +127,12 @@ def plot_formation_energies(ax1, ax2):
     # ax[1].set_yticks([])
     # ax[1].set_yticklabels([])
     ax[0].set_ylabel('Formation energy [eV]')
-    ax[0].text(-4, 0.5, '$v_C$')
-    ax[1].text(-4, 0.5, '$C_{Si}$')
+    ax[0].text(ax[0].get_xlim()[0] + 0.5 * (ax[0].get_xlim()[1] - ax[0].get_xlim()[0]), 
+               ax[0].get_ylim()[0] + 0.2 * (ax[0].get_ylim()[1] - ax[0].get_ylim()[0]),
+               '$\mathrm{v_C}$', ha='center', va='center')
+    ax[1].text(ax[1].get_xlim()[0] + 0.5 * (ax[1].get_xlim()[1] - ax[1].get_xlim()[0]), 
+               ax[1].get_ylim()[0] + 0.2 * (ax[1].get_ylim()[1] - ax[1].get_ylim()[0]),
+               '$\mathrm{C_{Si}}$', ha='center', va='center')
 
 
 def get_edge():
@@ -230,7 +234,7 @@ def plot_ks(ax):
     ax.text(0.198 - delta, -3.14, '$a_1$', horizontalalignment='right')
     ax.text(0.80 + delta, -1.32, '$a_2$', horizontalalignment='left')
     ax.text(0.70 - delta, -1.91, '$a_1$', horizontalalignment='right')
-    ax.text(0.05, 1, '$v_{Si}$', horizontalalignment='left', verticalalignment='center')
+    ax.text(0.05, 1, '$\mathrm{v_{Si}}$', horizontalalignment='left', verticalalignment='center')
     # ax.text(-2.7, 1, '$a_1$', verticalalignment='center')
     #filename = '/home/niflheim/smanti/5-Update/ks-plot/' + calc.atoms.get_chemical_formula()
     #filename = calc.atoms.get_chemical_formula()
@@ -251,13 +255,13 @@ def plot_cc(ax):
     ax.arrow(1.2, 2.35 - delta, 0, -0.35 + delta, **arrow_params)
     ax.arrow(-0.6, 0 + delta, 0, 0.35 - delta, **arrow_params)
     ax.arrow(-0.6, 0.35 - delta, 0, -0.35 + delta, **arrow_params)
-    ax.text(-0.8, 2.5, '$D_{excited}$', color='C1')
-    ax.text(1.1, 0.5, '$D_{ground}$', color='C0')
-    ax.text(1.2 + delta, 2.1725, '$\lambda_{exc}^{reorg}$', verticalalignment='center', horizontalalignment='left')
-    ax.text(0.55 + delta, 1.35, '$E_{ZPL} = 3.84$ eV', verticalalignment='center', horizontalalignment='left')
+    ax.text(-0.8, 2.5, '$D_{\mathrm{excited}}$', color='C1')
+    ax.text(1.1, 0.5, '$D_{\mathrm{ground}}$', color='C0')
+    ax.text(1.2 + delta, 2.1725, '$\lambda_{\mathrm{exc}}^{\mathrm{reorg}}$', verticalalignment='center', horizontalalignment='left')
+    ax.text(0.55 + delta, 1.35, '$E_{\mathrm{ZPL}} = 3.84$ eV', verticalalignment='center', horizontalalignment='left')
     ax.text(0.0 - delta, 1.1725, 'Excitation', verticalalignment='center', horizontalalignment='right', rotation=90)
-    ax.text(-0.6 - delta, 0.1725, '$\lambda_{gs}^{reorg}$', verticalalignment='center', horizontalalignment='right')
-    ax.text(-0.76 - delta, 2.93, '$v_{Si}$', horizontalalignment='right', verticalalignment='center')
+    ax.text(-0.6 - delta, 0.1725, '$\lambda_{\mathrm{gs}}^{\mathrm{reorg}}$', verticalalignment='center', horizontalalignment='right')
+    ax.text(-0.76 - delta, 2.93, '$\mathrm{v_{Si}}$', horizontalalignment='right', verticalalignment='center')
     ax.plot(x1, parabola(x1))
     ax.plot(x1 + 0.6, parabola(x1)+2)
     ax.set_xticks([], [])
