@@ -34,8 +34,9 @@ def make_pareto_lines(x_p, y_p):
         all_x.extend([x1, x2])
         all_y.extend([y, y])
 
-    plt.plot(all_x, all_y, color='k', ls='--', label='Pareto optimal')
-    plt.fill_between(all_x, all_y, 1, facecolor='none', edgecolor='C3', hatch='XXX',
+    plt.plot(all_x, all_y, color='C3', ls='--', label='Pareto front')
+    plt.fill_between(all_x, all_y, 1, facecolor='none',
+                     edgecolor=[0.7, 0.7, 0.7], hatch='XXX',
                      linewidth=0.0, zorder=-1, label='Excluded region')
 
 
@@ -113,8 +114,8 @@ def plot():
         ax.imshow(img, aspect='auto', extent=bbox, interpolation='gaussian')
 
     # plt.annotate('Pareto optimal', xy=(8, -0.525), ha='center', va='top')
-    plt.xlabel('Number of atoms')
-    plt.ylabel('HOF [eV/atom]')
+    plt.xlabel('Number of atoms per unit cell')
+    plt.ylabel(r'$\Delta H_\mathrm{form}$ [eV/atom]')
     plt.xlim(0, 13)
     plt.xticks(range(0, 14))
     plt.legend()  # facecolor='w', framealpha=1)
