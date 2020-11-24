@@ -90,8 +90,8 @@ def plot(row, fname, thisrow):
     legendhandles = []
 
     for it, label in enumerate(['On hull', 'off hull']):
-        handle = ax.scatter([], [], facecolor='none', marker='o',
-                            edgecolor=f'C{it + 2}', label=label, s=5**2)
+        handle = ax.fill_between([], [],
+                                 color=f'C{it + 2}', label=label)
         legendhandles.append(handle)
 
     for it, legend in enumerate(legends):
@@ -142,12 +142,51 @@ def plot(row, fname, thisrow):
         ax.scatter(x, y, facecolor='none', marker='o', edgecolor=edgecolors, s=sizes,
                    zorder=10)
 
+        printed_names = set()
         for a, b, name, on_hull in zip(x, y, latexnames, hull):
-            if name in ['BiITe', 'I', 'Bi', 'Te']:
+            if name in ['BiITe', 'I', 'Bi', 'Te'] and name not in printed_names:
+                printed_names.add(name)
                 ax.text(a - 0.02, b, name, ha='right', va='top')
         A, B, C = pd.symbols
         bfrac = count.get(B, 0) / sum(count.values())
         cfrac = count.get(C, 0) / sum(count.values())
+
+        from matplotlib.legend_handler import HandlerPatch
+        from matplotlib import patches
+
+        class ObjectHandler:
+            def legend_artist(self, legend, orig_handle, fontsize, handlebox):
+                x0, y0 = handlebox.xdescent, handlebox.ydescent
+                width, height = handlebox.width, handlebox.height
+                patch = patches.Polygon(
+                    [
+                        [x0, y0],
+                        [x0, y0 + height],
+                        [x0 + 3 / 4 * width, y0 + height],
+                        [x0 + 1 / 4 * width, y0],
+                    ],
+                    closed=True, facecolor='C2',
+                    edgecolor='none', lw=3,
+                    transform=handlebox.get_transform())
+                handlebox.add_artist(patch)
+                patch = patches.Polygon(
+                    [
+                        [x0 + width, y0],
+                        [x0 + 1 / 4 * width, y0],
+                        [x0 + 3 / 4 * width, y0 + height],
+                        [x0 + width, y0 + height],
+                    ],
+                    closed=True, facecolor='C3',
+                    edgecolor='none', lw=3,
+                    transform=handlebox.get_transform())
+                handlebox.add_artist(patch)
+                artist, = plt.plot(*zip([x0 + 1 / 4 * width, y0],
+                                        [x0 + 3 / 4 * width, y0 + height]),
+                                   color='k',
+                                   transform=handlebox.get_transform())
+                handlebox.add_artist(artist)
+                return patch
+
 
         from matplotlib.legend_handler import HandlerLine2D, HandlerTuple
 
@@ -156,8 +195,9 @@ def plot(row, fname, thisrow):
         plt.legend(
             newlegendhandles,
             ['On/off hull',
-             legends[0], legends[1]], loc='upper left', handletextpad=0,
-            handler_map={tuple: HandlerTuple(ndivide=None)})
+             legends[0], legends[1]], loc='upper right', handletextpad=0.5,
+            handler_map={tuple: ObjectHandler()},
+            bbox_to_anchor=(0.4, 1))
         plt.axis('off')
 
     plt.tight_layout()
