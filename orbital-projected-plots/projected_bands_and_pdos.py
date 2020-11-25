@@ -131,10 +131,21 @@ def projected_bs_pbe(row, ax,
                                      mfc='C{}'.format(c_i[i]), mew=0.0,
                                      marker=pie['marker'], ms=3. * np.pi,
                                      linewidth=0.0))
+    # Reorder labels, atom by row instead of atom by collumn (specific to MoS2)
+    handles = legend_markers
+    labels = [yl.replace(',', ' (') + ')' for yl in yl_i]
+    handles = handles[::3] + handles[1::3] + handles[2::3]
+    labels = labels[::3] + labels[1::3] + labels[2::3]
     # Generate legend
-    ax.legend(legend_markers, [yl.replace(',', ' (') + ')' for yl in yl_i],
-              bbox_to_anchor=(0., 1.02, 1., 0.), loc='lower left',
-              ncol=2, mode="expand", borderaxespad=0.)
+    ax.legend(
+        handles, labels,
+        bbox_to_anchor=(0., 1.02, 1., 0.),
+        loc='lower left',
+        # ncol=2,
+        ncol=3,
+        mode="expand",
+        borderaxespad=0.
+    )
 
     ax.set_xlabel(r'$k$-points')
     xlim = ax.get_xlim()
@@ -246,15 +257,26 @@ def plot_pdos(row, ax, soc=True):
         path_effects.Normal()
     ])
 
-    ax.set_xlabel('projected dos [states / eV]')
+    ax.set_xlabel('Projected DOS [states / eV]')
     if row.get('evac') is not None:
         ax.set_ylabel(r'$E-E_\mathrm{vac}$ [eV]')
     else:
         ax.set_ylabel(r'$E$ [eV]')
 
     # Set up legend
-    ax.legend(bbox_to_anchor=(0., 1.02, 1., 0.), loc='lower left',
-              ncol=2, mode="expand", borderaxespad=0.)
+    # Reorder labels, atom by row instead of atom by collumn (specific to MoS2)
+    handles, labels = ax.get_legend_handles_labels()
+    handles = handles[::3] + handles[1::3] + handles[2::3]
+    labels = labels[::3] + labels[1::3] + labels[2::3]
+    ax.legend(
+        handles, labels,
+        bbox_to_anchor=(0., 1.02, 1., 0.),
+        loc='lower left',
+        # ncol=2,
+        ncol=3,
+        mode="expand",
+        borderaxespad=0.
+    )
 
 
 if __name__ == '__main__':
@@ -273,7 +295,7 @@ if __name__ == '__main__':
     db = connect("../pareto-plot/mos2/mos2.db")
 
     # Figure
-    figsize = (textwidth, 4.)
+    figsize = (textwidth, 3.4)
     npoints = 17
     res = 128
     filename = "../../MoS2-H_pbands-pdos.pdf"
