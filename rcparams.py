@@ -11,7 +11,7 @@ rcp['font.monospace'] = 'Computer Modern Typewriter'
 rcp['text.usetex'] = True
 # Font sizes
 rcp['axes.labelsize'] = 10
-rcp['font.size'] = 8
+rcp['font.size'] = 10
 rcp['legend.fontsize'] = 8
 rcp['xtick.labelsize'] = 8
 rcp['ytick.labelsize'] = 8
