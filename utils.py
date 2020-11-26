@@ -13,6 +13,16 @@ from utils import (
 
 In the top of your script.
 
+Comments:
+
+26/11-2020:
+
+    If you are experiencing problems with PIL you can try:
+
+        from PIL import Image
+
+    which worked for a problem Thorsten had on openSUSE.
+
 """
 
 from pathlib import Path
