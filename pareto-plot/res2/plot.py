@@ -84,6 +84,7 @@ def plot():
     plt.figure(figsize=(textwidth, columnwidth))
     make_pareto_lines(pareto_data_x, pareto_data_y)
     plt.scatter(pareto_data_x, pareto_data_y, color='k', zorder=2)
+    plt.scatter([6, 9], [-0.3, -0.4], color='C3', zorder=2)
     names = ["T'", "T''", "T"]
 
     for x, y, name in zip(pareto_data_x, pareto_data_y, names):

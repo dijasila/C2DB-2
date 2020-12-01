@@ -197,7 +197,8 @@ def plot(row, fname, thisrow):
             ['On/off hull',
              legends[0], legends[1]], loc='upper right', handletextpad=0.5,
             handler_map={tuple: ObjectHandler()},
-            bbox_to_anchor=(0.4, 1))
+            # bbox_to_anchor=(0.4, 1),
+        )
         plt.axis('off')
 
     plt.tight_layout()
