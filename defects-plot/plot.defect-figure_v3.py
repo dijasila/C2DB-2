@@ -40,29 +40,32 @@ def get_b(x, y, a):
     return y - a * x
 
 
-def plot_formation_energies(ax1, ax2):
+def plot_formation_energies(ax):
     defnamelist = ['vC', 'CSi']
-    ax = [ax1, ax2]
+    c = ['C2', 'C4']
+    data = read_json(f'results-asr.sj_analyze_{defnamelist[0]}.json')
+    vbm = data['pristine']['vbm'] - data['pristine']['evac']
+    cbm = data['pristine']['cbm'] - data['pristine']['evac']
+    gap = cbm - vbm
+    eform = data['eform']
+
+    ax.fill_betweenx([-10, 30], vbm - 10, vbm, color='C0', alpha=0.5)
+    ax.fill_betweenx([-10, 30], cbm + 10, cbm, color='C1', alpha=0.5)
+    ax.axhline(0, color='black', linestyle='dotted')
+
+    ax.set_xlim(vbm - 0.1 * gap, cbm + 0.1 * gap)
+    ax.set_ylim(-0.1, eform + 0.2 * eform)
+
     for l in [0, 1]:
         data = read_json(f'results-asr.sj_analyze_{defnamelist[l]}.json')
 
-        vbm = data['pristine']['vbm'] - data['pristine']['evac']
-        cbm = data['pristine']['cbm'] - data['pristine']['evac']
-        gap = cbm - vbm
         eform = data['eform']
 
         transitions = data['transitions']
-
-        ax[l].fill_betweenx([-10, 30], vbm - 10, vbm, color='C0', alpha=0.5)
-        ax[l].fill_betweenx([-10, 30], cbm + 10, cbm, color='C1', alpha=0.5)
-        ax[l].axhline(0, color='black', linestyle='dotted')
-
-        ax[l].set_xlim(vbm - 0.1 * gap, cbm + 0.1 * gap)
-        ax[l].set_ylim(-0.1, eform + 0.2 * eform)
         #ax[l].set_ylim(-0.1, 9.2)
         e_m = transitions["-1/0"][0] - transitions["-1/0"][1] - transitions["-1/0"][2]
         e_p = transitions["0/1"][0] - transitions["0/1"][1] - transitions["0/1"][2]
-        ax[l].plot([vbm, cbm], [eform, eform], color='black')
+        ax.plot([vbm, cbm], [eform, eform], color=c[l])
         # if e_m < cbm and e_m > vbm:
         #     ax[l].axvline(e_m, color='black', linestyle='-.')
         # if e_p < cbm and e_p > vbm:
@@ -74,7 +77,7 @@ def plot_formation_energies(ax1, ax2):
         for element in transitions:
             enlist.append(transitions[element][0] - transitions[element][1] - transitions[element][2])
 
-        ax2 = ax[l].twiny()
+        # ax2 = ax[l].twiny()
 
         tickslist = []
         labellist = []
@@ -83,7 +86,7 @@ def plot_formation_energies(ax1, ax2):
             enlist.append(energy)
             name = element
             if energy > vbm and energy < cbm:
-                ax[l].axvline(energy, linewidth=0.5, linestyle='-.', color='grey')
+                ax.axvline(energy, linewidth=0.5, linestyle='-.', color='grey')
                 if name.split('/')[1].startswith('0') and name.split('/')[0].startswith('-'):
                     y1 = eform
                     y2 = eform
@@ -103,8 +106,8 @@ def plot_formation_energies(ax1, ax2):
                         y1 = f(enlist[i], a, b)
                     y2 = f(enlist[i + 1], a, b)
                     print(enlist[i], enlist[i+1], y1, y2, a)
-                    ax[l].plot([vbm, cbm], [f(vbm, a, b), f(cbm, a, b)], color='black')
-                    ax[l].plot([enlist[i], enlist[i + 1]], [y1, y2], color='black', marker='x')
+                    ax.plot([vbm, cbm], [f(vbm, a, b), f(cbm, a, b)], color=c[l])
+                    ax.plot([enlist[i], enlist[i + 1]], [y1, y2], color=c[l], marker='x')
                 elif not name.split('/')[0].startswith('-'):
                     tickslist.append(energy)
                     labellist.append(name)
@@ -114,25 +117,35 @@ def plot_formation_energies(ax1, ax2):
                         y2 = f(enlist[i], a, b)
                     y1 = f(enlist[i + 1], a, b)
                     print(enlist[i], enlist[i+1], y1, y2, a)
-                    ax[l].plot([vbm, cbm], [f(vbm, a, b), f(cbm, a, b)], color='black')
-                    ax[l].plot([enlist[i + 1], enlist[i]], [y1, y2], color='black', marker='x')
-        ax[l].set_xlabel('$E_F$ [eV]')
-        # ax[l].set_xticks([-4.7, -3.7])
-        ax[l].set_ylim(-0.1, 2.6)
-        # ax[l].tick_params(axis='both')
-        ax2.set_xlim(ax[l].get_xlim())
-        ax2.set_xticks(tickslist)
-        ax2.set_xticklabels(labellist)
+                    ax.plot([vbm, cbm], [f(vbm, a, b), f(cbm, a, b)], color=c[l])
+                    ax.plot([enlist[i + 1], enlist[i]], [y1, y2], color=c[l], marker='x')
+    ax.set_xlabel('$E_F$ [eV]')
+    # ax[l].set_xticks([-4.7, -3.7])
+    ax.set_ylim(-0.1, 3.0)
+    ax.tick_params(axis='both')
+    legendlist = ['$\mathrm{V_{C}}$', '$\mathrm{C_{Si}}$']
+    for i, color in enumerate(c):
+        ax.plot([], [], label=legendlist[i], color=color)
+    ax.legend()
+    # ax2.set_xlim(ax[l].get_xlim())
+    # ax2.set_xticks(tickslist)
+    # ax2.set_xticklabels(labellist)
 
-    ax[1].set_yticks([])
-    ax[1].set_yticklabels([])
-    ax[0].set_ylabel('Formation energy [eV]')
-    ax[0].text(ax[0].get_xlim()[0] + 0.5 * (ax[0].get_xlim()[1] - ax[0].get_xlim()[0]), 
-               ax[0].get_ylim()[0] + 0.2 * (ax[0].get_ylim()[1] - ax[0].get_ylim()[0]),
-               '$\mathrm{V_C}$', ha='center', va='center')
-    ax[1].text(ax[1].get_xlim()[0] + 0.5 * (ax[1].get_xlim()[1] - ax[1].get_xlim()[0]), 
-               ax[1].get_ylim()[0] + 0.2 * (ax[1].get_ylim()[1] - ax[1].get_ylim()[0]),
-               '$\mathrm{C_{Si}}$', ha='center', va='center')
+    # ax[1].set_yticks([])
+    # ax[1].set_yticklabels([])
+    ax.set_ylabel('Formation energy [eV]')
+    ypos = ax.get_ylim()[0] + 0.5 * (ax.get_ylim()[1] - ax.get_ylim()[0])
+    xdiff = abs(vbm - ax.get_xlim()[0]) * 0.5
+    ax.text(vbm - xdiff, ypos, 'VBM', ha='center', va='center', rotation=90, color='w')
+    ax.text(cbm + xdiff, ypos, 'CBM', ha='center', va='center', rotation=90, color='w')
+    ax.axvline(vbm, color='C0', lw=2, zorder=1)
+    ax.axvline(cbm, color='C1', lw=2, zorder=1)
+    # ax[0].text(ax[0].get_xlim()[0] + 0.5 * (ax[0].get_xlim()[1] - ax[0].get_xlim()[0]), 
+    #            ax[0].get_ylim()[0] + 0.2 * (ax[0].get_ylim()[1] - ax[0].get_ylim()[0]),
+    #            '$\mathrm{V_C}$', ha='center', va='center')
+    # ax[1].text(ax[1].get_xlim()[0] + 0.5 * (ax[1].get_xlim()[1] - ax[1].get_xlim()[0]), 
+    #            ax[1].get_ylim()[0] + 0.2 * (ax[1].get_ylim()[1] - ax[1].get_ylim()[0]),
+    #            '$\mathrm{C_{Si}}$', ha='center', va='center')
 
 
 def get_edge():
@@ -152,7 +165,7 @@ def band_edge(energy, edge, color, offset=2, ax=None):
         elabel = energy + offset/2
 
     ax.plot([0,1],[energy]*2, color=color, lw=2,zorder=1)
-    ax.fill_between([0,1],[energy]*2,[eoffset]*2, color=color, alpha=0.7)
+    ax.fill_between([0,1],[energy]*2,[eoffset]*2, color=color, alpha=0.5)
     ax.text(0.5, elabel, edge.upper(), color='w', ha='center', va='center')
 
 
@@ -346,28 +359,29 @@ fig = plt.figure(constrained_layout=True)
 figsize = (textwidth, 5.)
 fig.set_size_inches(*figsize)
 gs = GridSpec(6, 8, figure=fig)
-axform1 = fig.add_subplot(gs[:3, 4:6])
-axform2 = fig.add_subplot(gs[:3, 6:])
+# axform1 = fig.add_subplot(gs[:3, 4:6])
+# axform2 = fig.add_subplot(gs[:3, 6:])
+axform = fig.add_subplot(gs[:3, 4:])
 axexc = fig.add_subplot(gs[3:, :4])
 axks = fig.add_subplot(gs[3:, 4:])
 axim = fig.add_subplot(gs[:3, :4])
-axform_help = fig.add_subplot(gs[:3, 4:])
-axform_help.axis('off')
+# axform_help = fig.add_subplot(gs[:3, 4:])
+# axform_help.axis('off')
 
 
-plot_formation_energies(axform1, axform2)
+plot_formation_energies(axform)
 plot_ks(axks)
 plot_cc(axexc)
 plot_structures(axim)
 
 # labelsp
 append_label(axim, 'a')
-append_label(axform_help, 'b')
+append_label(axform, 'b')
 append_label(axexc, 'c')
 append_label(axks, 'd')
 
-plt.tight_layout()
-plt.savefig('defects_v2.pdf')
-plt.savefig('defects_v2.png', dpi=300)
+# plt.tight_layout()
+plt.savefig('defects_v3.pdf')
+plt.savefig('defects_v3.png', dpi=300)
 plt.show()
 

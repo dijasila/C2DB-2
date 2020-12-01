@@ -10,6 +10,7 @@ from utils import cut_square_sheet, make_image_of_2D_material_from_multiple_pers
 from ase.io import read
 
 structures = ['primitive', 'defect_vSi']
+kwargs = {'canvas_width': 1000, 'celllinewidth': 0.}
 for name in structures:
     atoms = read(name + '.json')
     # atoms = cut_square_sheet(atoms)
@@ -18,7 +19,7 @@ for name in structures:
     # elif name.split('_')[-1] == 'Ge2Se2':
     #     bondatoms = get_bondpairs(atoms, radius=1.)
     # top view
-    filename = run_povray(atoms, rotation='0x,0y')
+    filename = run_povray(atoms, rotation='0x,0y', **kwargs)
     # rename file
     os.system(f'mv {filename} {name}.png')
     # cut view
