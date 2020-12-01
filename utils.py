@@ -11,6 +11,13 @@ from utils import (
     make_image_of_2D_material_from_multiple_perspectives
 )
 
+In order to install povray on slid do:
+
+$ cp -r /home/niflheim/mogje/.povray ~/
+$ cp /home/niflheim/mogje/.local/bin/povray ~/.local/bin/
+
+Note this will only work on slid.
+
 In the top of your script.
 
 Comments:
