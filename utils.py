@@ -30,6 +30,10 @@ Comments:
 
     which worked for a problem Thorsten had on openSUSE.
 
+03/12-2020:
+
+    If you are getting some error like "TypeError: run_povray unknown argument". Then update ASE.
+
 """
 
 from pathlib import Path
@@ -87,18 +91,31 @@ def run_povray(
     if filename is None:
         filename = f'{atoms.symbols.formula:metal}.pov'
     print(f'Povray running for {filename}')
-    atoms.write(
-        filename=filename,
-        run_povray=True,
-        # background='White',
-        # transparent=False,
-        display=display,
-        rotation=rotation,
-        # canvas_width=canvas_width,
-        radii=radii,
-        bondatoms=bondatoms,
-        **kwargs,
-    )
+    try:
+        atoms.write(
+            filename=filename,
+            run_povray=True,
+            # background='White',
+            # transparent=False,
+            display=display,
+            rotation=rotation,
+            # canvas_width=canvas_width,
+            radii=radii,
+            bondatoms=bondatoms,
+            **kwargs,
+        )
+    except TypeError:
+        from ase.io.pov import write_pov
+        write_pov(
+            filename=filename,
+            atoms=atoms,
+            generic_projection_settings=dict(
+                rotation=rotation,
+                radii=radii,
+                **kwargs,
+            ),
+            povray_settings=dict(bondatoms=bondatoms),
+        ).render()
     _clean_povray_files(filename)
     return str(Path(filename).with_suffix('.png'))
 
