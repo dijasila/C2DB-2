@@ -33,25 +33,38 @@ def analyze():
 
     nz = 0
     D = []
+    extra = {}
     for u, d in data.items():
         if 'Z_avv' not in d:
             continue
         nz += 1
         B_a = d['B_a']
         Z_avv = d['Z_avv']
-        D.extend([(np.trace(M_vv[:2, :2]) / 2,
-                   M_vv[2, 2],
+        D.extend([(np.trace(Z_vv[:2, :2]) / 2,
+                   Z_vv[2, 2],
                    B)
-                  for M_vv, B in zip(Z_avv, B_a)])
+                  for Z_vv, B in zip(Z_avv, B_a)])
+        if u.startswith('BN-'):
+            symbols = ['B', 'N']
+        elif u.startswith('MoS2-'):
+            symbols = ['Mo', 'S']
+        else:
+            symbols = []
+        for symbol, Z_vv, B in zip(symbols, Z_avv, B_a):
+            assert symbol not in extra
+            extra[symbol] = (np.trace(Z_vv[:2, :2]) / 2,
+                             Z_vv[2, 2],
+                             B)
 
     zin, zout, b = np.array(D).T
-    m = abs(zin) >= -4
-    print(nz, len(m), sum(m))
-    return zin, zout, b
+    bad = abs(zin) >= 5
+    print(nz, len(b), sum(bad))
+
+    return zin, zout, b, extra
 
 
 def plot():
-    zin, zout, b = analyze()
+    zin, zout, b, extra = analyze()
 
     fig = plt.figure(figsize=(width, width),
                      constrained_layout=True)
@@ -69,6 +82,10 @@ def plot():
     p1, p0 = fit = np.polyfit(b, zout, 1)
     y = np.polyval(fit, x)
     ax.plot(x, y, label=f'$y = {p0:.1f} + {p1:.1f} x$')
+
+    for symbol, (i, o, b) in extra.items():
+        ax.text(b, i, symbol)
+        # ax.text(b, o, symbol)
 
     ax.set_xlabel('Bader charge')
     ax.set_ylabel('Born charge')
