@@ -18,7 +18,8 @@ def extract_data():
         born = row.data.get('results-asr.borncharges.json')
         bader = row.data.get('results-asr.bader.json')
         B_a = bader['kwargs']['data']['bader_charges']
-        data[row.uid] = {'B_a': B_a}
+        data[row.uid] = {'gap': row.gap,
+                         'B_a': B_a}
         if born is not None:
             Z_avv = born['kwargs']['data']['Z_avv']
             data[row.uid]['Z_avv'] = Z_avv
@@ -34,12 +35,16 @@ def analyze():
     nz = 0
     D = []
     extra = {}
+    gaps = []
     for u, d in data.items():
         if 'Z_avv' not in d:
             continue
         nz += 1
         B_a = d['B_a']
         Z_avv = d['Z_avv']
+        gaps.append((d['gap'],
+                     abs(B_a).mean(),
+                     abs(np.trace(Z_avv[:, :2, :2], 0, 1, 2) / 2).mean()))
         D.extend([(np.trace(Z_vv[:2, :2]) / 2,
                    Z_vv[2, 2],
                    B)
@@ -60,32 +65,37 @@ def analyze():
     bad = abs(zin) >= 5
     print(nz, len(b), sum(bad))
 
-    return zin, zout, b, extra
+    return zin, zout, b, extra, gaps
 
 
 def plot():
-    zin, zout, b, extra = analyze()
+    zin, zout, b, extra, gaps = analyze()
 
-    fig = plt.figure(figsize=(width, width),
+    fig = plt.figure(figsize=(width, width * 0.8),
                      constrained_layout=True)
     ax = fig.add_subplot(111)
 
-    ax.plot(b, zin, 'o', label='in-plane')
+    ax.plot(b, zin, '+', label='in-plane')
 
     x = [-5.0, 5.0]
     p1, p0 = fit = np.polyfit(b, zin, 1)
     y = np.polyval(fit, x)
-    ax.plot(x, y, label=f'$y = {p0:.1f} + {p1:.1f} x$')
+    ax.plot(x, y,
+            # label=f'$y = {p0:.1f} + {p1:.1f} x$'
+            )
 
-    ax.plot(b, zout, 'o', label='out-of-plane')
+    ax.plot(b, zout, 'x', label='out-of-plane')
 
     p1, p0 = fit = np.polyfit(b, zout, 1)
     y = np.polyval(fit, x)
-    ax.plot(x, y, label=f'$y = {p0:.1f} + {p1:.1f} x$')
+    ax.plot(x, y,
+            # label=f'$y = {p0:.1f} + {p1:.1f} x$'
+            )
 
-    for symbol, (i, o, b) in extra.items():
-        ax.text(b, i, symbol)
-        # ax.text(b, o, symbol)
+    if 0:
+        for symbol, (i, o, b) in extra.items():
+            ax.text(b, i, symbol)
+            # ax.text(b, o, symbol)
 
     ax.set_xlabel('Bader charge')
     ax.set_ylabel('Born charge')
@@ -105,6 +115,27 @@ def plot():
     """
 
 
+def plot2():
+    *_, gaps = analyze()
+    g, b, z = np.array(gaps).T
+
+    fig = plt.figure(figsize=(2 * width, 2 * width),
+                     constrained_layout=True)
+    ax = fig.add_subplot(111)
+
+    ax.plot(g, z, '+', label='born')
+    ax.plot(g, b, 'x', label='bader')
+    ax.set_xlabel('Gap')
+    ax.set_ylabel('Charge')
+    ax.legend()
+    ax.set_xlim(0, 6)
+    ax.set_ylim(0, 10)
+    fig.savefig('gap-charge.png')
+    plt.show()
+    return
+
+
 if __name__ == '__main__':
     extract_data()
     plot()
+    plot2()
