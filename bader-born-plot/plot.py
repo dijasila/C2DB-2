@@ -68,14 +68,16 @@ def analyze():
     return zin, zout, b, extra, gaps
 
 
-def plot():
+def plot1():
     zin, zout, b, extra, gaps = analyze()
 
     fig = plt.figure(figsize=(width, width * 0.8),
                      constrained_layout=True)
     ax = fig.add_subplot(111)
 
-    ax.plot(b, zin, '+', label='in-plane')
+    ax.plot(b, zin, 'o', alpha=0.25, label='in-plane')
+
+    ax.plot(b, zout, 'o', alpha=0.25, label='out-of-plane')
 
     x = [-5.0, 5.0]
     p1, p0 = fit = np.polyfit(b, zin, 1)
@@ -83,8 +85,6 @@ def plot():
     ax.plot(x, y,
             # label=f'$y = {p0:.1f} + {p1:.1f} x$'
             )
-
-    ax.plot(b, zout, 'x', label='out-of-plane')
 
     p1, p0 = fit = np.polyfit(b, zout, 1)
     y = np.polyval(fit, x)
@@ -119,17 +119,17 @@ def plot2():
     *_, gaps = analyze()
     g, b, z = np.array(gaps).T
 
-    fig = plt.figure(figsize=(2 * width, 2 * width),
+    fig = plt.figure(figsize=(width, 0.8 * width),
                      constrained_layout=True)
     ax = fig.add_subplot(111)
 
-    ax.plot(g, z, '+', label='born')
-    ax.plot(g, b, 'x', label='bader')
-    ax.set_xlabel('Gap')
-    ax.set_ylabel('Charge')
+    ax.plot(g, z, 'o', alpha=0.25, label='born')
+    ax.plot(g, b, 'o', color='C2', alpha=0.25, label='bader')
+    ax.set_xlabel('Gap [eV]')
+    ax.set_ylabel('Charge (mean absolute value)')
     ax.legend()
     ax.set_xlim(0, 6)
-    ax.set_ylim(0, 10)
+    ax.set_ylim(0, 7)
     fig.savefig('gap-charge.png')
     plt.show()
     return
@@ -137,5 +137,5 @@ def plot2():
 
 if __name__ == '__main__':
     extract_data()
-    plot()
+    plot1()
     plot2()
