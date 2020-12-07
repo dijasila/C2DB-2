@@ -82,12 +82,14 @@ def plot1():
     x = [-5.0, 5.0]
     p1, p0 = fit = np.polyfit(b, zin, 1)
     y = np.polyval(fit, x)
+    print(p0, p1)
     ax.plot(x, y,
             # label=f'$y = {p0:.1f} + {p1:.1f} x$'
             )
 
     p1, p0 = fit = np.polyfit(b, zout, 1)
     y = np.polyval(fit, x)
+    print(p0, p1)
     ax.plot(x, y,
             # label=f'$y = {p0:.1f} + {p1:.1f} x$'
             )
