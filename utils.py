@@ -209,6 +209,7 @@ def make_image_of_2D_material_from_multiple_perspectives(
         rotations=['0x,0y', '-90x', '90y'],
         basename=format(atoms.symbols.formula,
                         'metal'),
+        bondatoms = bondatoms,
     )
 
     images = []
