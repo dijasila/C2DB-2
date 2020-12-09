@@ -79,7 +79,7 @@ def plot():
         pareto_data_x.append(row.natoms)
         pareto_data_y.append(row.hform)
         atoms = row.toatoms()
-        # make_image_of_2D_material_from_multiple_perspectives(atoms)
+        make_image_of_2D_material_from_multiple_perspectives(atoms)
 
     plt.figure(figsize=(textwidth, columnwidth))
     make_pareto_lines(pareto_data_x, pareto_data_y)
