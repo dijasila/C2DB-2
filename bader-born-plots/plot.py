@@ -62,7 +62,7 @@ def analyze():
                              B)
 
     zin, zout, b = np.array(D).T
-    bad = abs(zin) >= 5
+    bad = abs(zin) >= 7.5
     print(nz, len(b), sum(bad))
 
     return zin, zout, b, extra, gaps
@@ -70,14 +70,18 @@ def analyze():
 
 def plot1():
     zin, zout, b, extra, gaps = analyze()
+    ok = abs(zin) < 7.5
+    zin = zin[ok]
+    zout = zout[ok]
+    b = b[ok]
 
     fig = plt.figure(figsize=(width, width * 0.8),
                      constrained_layout=True)
     ax = fig.add_subplot(111)
 
-    ax.plot(b, zin, 'o', alpha=0.25, label='in-plane')
+    ax.plot(b, zin, 'o', alpha=0.5, ms=2, label='in-plane')
 
-    ax.plot(b, zout, 'o', alpha=0.25, label='out-of-plane')
+    ax.plot(b, zout, 'o', alpha=0.5, ms=2, label='out-of-plane')
 
     x = [-5.0, 5.0]
     p1, p0 = fit = np.polyfit(b, zin, 1)
@@ -99,8 +103,8 @@ def plot1():
             ax.text(b, i, symbol)
             # ax.text(b, o, symbol)
 
-    ax.set_xlabel('Bader charge')
-    ax.set_ylabel('Born charge')
+    ax.set_xlabel('Bader charge [e]')
+    ax.set_ylabel('Born charge [e]')
     ax.legend()
     ax.set_ylim(-7.5, 7.5)
     fig.savefig('bader-born.png')
@@ -125,10 +129,10 @@ def plot2():
                      constrained_layout=True)
     ax = fig.add_subplot(111)
 
-    ax.plot(g, z, 'o', alpha=0.25, label='born')
-    ax.plot(g, b, 'o', color='C2', alpha=0.25, label='bader')
-    ax.set_xlabel('Gap [eV]')
-    ax.set_ylabel('Charge (mean absolute value)')
+    ax.plot(g, z, 'o', alpha=0.5, ms=2, label='Born charge')
+    ax.plot(g, b, 'o', color='C2', alpha=0.5, ms=2, label='Bader charge')
+    ax.set_xlabel('Band gap [eV]')
+    ax.set_ylabel('Charge (mean absolute value) [e]')
     ax.legend()
     ax.set_xlim(0, 6)
     ax.set_ylim(0, 7)
