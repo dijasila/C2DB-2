@@ -42,9 +42,12 @@ def analyze():
         nz += 1
         B_a = d['B_a']
         Z_avv = d['Z_avv']
-        gaps.append((d['gap'],
-                     abs(B_a).mean(),
-                     abs(np.trace(Z_avv[:, :2, :2], 0, 1, 2) / 2).mean()))
+        x = (d['gap'],
+             abs(B_a).mean(),
+             abs(np.trace(Z_avv[:, :2, :2], 0, 1, 2) / 2).mean())
+        gaps.append(x)
+        if abs(x[0] - 3.5) < 0.2 and x[1] < 0.1:
+            print(u, d)
         D.extend([(np.trace(Z_vv[:2, :2]) / 2,
                    Z_vv[2, 2],
                    B)
