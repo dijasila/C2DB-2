@@ -38,7 +38,7 @@ def plot():
     # Get max phonon freq
     phonondata = dct_to_result(row.data.get("results-asr.phonons.json"))
     maxphononfreq = phonondata.get("omega_kl")[0].max() * 1e3
-    maxomega = maxphononfreq * 1.5
+    maxomega = maxphononfreq * 3
 
     atoms = row.toatoms()
     pbc_c = atoms.pbc
@@ -65,7 +65,7 @@ def plot():
         plt.plot(omega_w, epsx_w.imag, label='imag')
         plt.plot(omega_w, epsx_w.real, label='real')
         ax = plt.gca()
-        ax.set_title("x-polarization")
+        # ax.set_title("x-polarization")
         ax.set_xlabel("Energy [meV]")
         ax.set_ylabel(r"Dielectric function")
         ax.set_xlim(0, maxomega)
@@ -77,7 +77,7 @@ def plot():
         plt.plot(omega_w, epsy_w.imag, label='imag')
         plt.plot(omega_w, epsy_w.real, label='real')
         ax = plt.gca()
-        ax.set_title("y-polarization")
+        # ax.set_title("y-polarization")
         ax.set_xlabel("Energy [meV]")
         ax.set_ylabel(r"Dielectric function")
         ax.set_xlim(0, maxomega)
@@ -89,7 +89,7 @@ def plot():
         plt.plot(omega_w, epsz_w.imag, label='imag')
         plt.plot(omega_w, epsz_w.real, label='real')
         ax = plt.gca()
-        ax.set_title("z-polarization")
+        # ax.set_title("z-polarization")
         ax.set_xlabel("Energy [meV]")
         ax.set_ylabel(r"Dielectric function")
         ax.set_xlim(0, maxomega)
@@ -106,8 +106,10 @@ def plot():
         plt.figure(figsize=(columnwidth, columnwidth))
         plt.plot(omega_w, ax_w.imag, label='imag')
         plt.plot(omega_w, ax_w.real, label='real')
+        plt.annotate(r'$\alpha_\infty$', xy=(omega_w[-1] - 30, ax_w.real[-1]),
+                     va='bottom', ha='center')
         ax = plt.gca()
-        ax.set_title("x-polarization")
+        # ax.set_title("x-polarization")
         ax.set_xlabel("Energy [meV]")
         ax.set_ylabel(rf"Polarizability [{unit}]")
         ax.set_xlim(0, maxomega)
@@ -119,7 +121,7 @@ def plot():
         plt.plot(omega_w, ay_w.imag, label='imag')
         plt.plot(omega_w, ay_w.real, label='real')
         ax = plt.gca()
-        ax.set_title("y-polarization")
+        # ax.set_title("y-polarization")
         ax.set_xlabel("Energy [meV]")
         ax.set_ylabel(rf"Polarizability [{unit}]")
         ax.set_xlim(0, maxomega)
@@ -131,7 +133,7 @@ def plot():
         plt.plot(omega_w, az_w.imag, label='imag')
         plt.plot(omega_w, az_w.real, label='real')
         ax = plt.gca()
-        ax.set_title("z-polarization")
+        # ax.set_title("z-polarization")
         ax.set_xlabel("Energy [meV]")
         ax.set_ylabel(rf"Polarizability [{unit}]")
         ax.set_xlim(0, maxomega)
