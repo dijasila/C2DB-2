@@ -180,11 +180,11 @@ def plot(row, fname, thisrow):
                     edgecolor='none', lw=3,
                     transform=handlebox.get_transform())
                 handlebox.add_artist(patch)
-                artist, = plt.plot(*zip([x0 + 1 / 4 * width, y0],
-                                        [x0 + 3 / 4 * width, y0 + height]),
-                                   color='k',
-                                   transform=handlebox.get_transform())
-                handlebox.add_artist(artist)
+                # artist, = plt.plot(*zip([x0 + 1 / 4 * width, y0],
+                #                         [x0 + 3 / 4 * width, y0 + height]),
+                #                    color='k',
+                #                    transform=handlebox.get_transform())
+                # handlebox.add_artist(artist)
                 return patch
 
 
