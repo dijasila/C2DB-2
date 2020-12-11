@@ -12,7 +12,7 @@ from mendeleev import element
 width = runpy.run_path('../rcparams.py')['columnwidth']
 
 chis = {symbol: element(symbol).electronegativity('pauling')
-        for symbol in chemical_symbols[1:70]}
+        for symbol in chemical_symbols[1:90]}
 
 
 def extract_data():
@@ -24,7 +24,7 @@ def extract_data():
         born = row.data.get('results-asr.borncharges.json')
         bader = row.data.get('results-asr.bader.json')
         B_a = bader['kwargs']['data']['bader_charges']
-        symbols = bader['kwargs']['data']['symb_a']
+        symbols = bader['kwargs']['data']['sym_a']
         data[row.uid] = {'gap': row.gap,
                          'B_a': B_a,
                          'symbols': symbols}
