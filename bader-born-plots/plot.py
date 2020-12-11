@@ -164,20 +164,79 @@ def plot3():
         zout = zout[ok]
         b = b[ok]
 
+    i = np.argsort(chi)
+    chi = chi[i]
+    zin = zin[i]
+    b = b[i]
+
     fig = plt.figure(figsize=(width, width * 0.8),
                      constrained_layout=True)
     ax = fig.add_subplot(111)
 
-    ax.plot(chi, zout - b, 'o', alpha=0.5, ms=2, label='in-plane')
+    ax.plot(chi, zin - b, 'o', alpha=0.5, ms=2)
+
+    dc = 0.1
+    X = []
+    Y = []
+    dY = []
+    for i in range(10):
+        c = dc + i * 2 * dc
+        m = (c - dc < chi) & (chi <= c + dc)
+        y = (zin - b)[m]
+        if len(y) == 0:
+            continue
+        y0 = y.mean()
+        dy = ((y - y0)**2).mean()**0.5
+        X.append(c)
+        Y.append(y0)
+        dY.append(dy)
+
+    ax.errorbar(X, Y, dY, dc, 'o')
+
+    ax.set_xlabel('I(a)')
+    ax.set_ylabel('Born(in-plane, a) -Bader(a) [e]')
+    ax.set_ylim(-7, 7)
+    # ax.legend()
+    fig.savefig('ionicity1.png')
+    plt.show()
+    return
+
+
+def plot4():
+    zin, zout, b, chi, extra, gaps = analyze()
+    if 0:
+        ok = abs(zin) < 7.5
+        zin = zin[ok]
+        zout = zout[ok]
+        b = b[ok]
+
+    i = np.argsort(chi)
+    chi = chi[i]
+    zin = zin[i]
+    b = b[i]
+
+    fig = plt.figure(figsize=(width, width * 0.8),
+                     constrained_layout=True)
+    ax = fig.add_subplot(111)
+
+    # ax.plot(chi, zin - b, 'o', alpha=0.5, ms=2)
+    # ax.plot(chi, zin, 'o', alpha=0.5, ms=2, label='Zin')
+    # ax.plot(chi, b, 'o', alpha=0.5, ms=2, label='B')
+    s = ax.scatter(b, zin, c=chi, s=2, alpha=0.5)
 
     ax.set_xlabel('Bader charge [e]')
-    ax.set_ylabel('Born charge [e]')
-    ax.legend()
+    ax.set_ylabel('Born charge (in-plane,) [e]')
+    cbar = fig.colorbar(s)
+    cbar.set_label('I')
+    ax.set_ylim(-7, 7)
+    # ax.legend()
+    fig.savefig('ionicity2.png')
     plt.show()
     return
 
 
 if __name__ == '__main__':
     extract_data()
-    plot1()
-    plot2()
+    # plot1()
+    # plot2()
+    plot4()
