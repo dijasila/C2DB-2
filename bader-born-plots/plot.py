@@ -4,9 +4,15 @@ import runpy
 
 import numpy as np
 from ase.db import connect
+from ase.data import chemical_symbols
 import matplotlib.pyplot as plt
+from mendeleev import element
+
 
 width = runpy.run_path('../rcparams.py')['columnwidth']
+
+chis = {symbol: element(symbol).electronegativity('pauling')
+        for symbol in chemical_symbols[1:70]}
 
 
 def extract_data():
@@ -18,8 +24,10 @@ def extract_data():
         born = row.data.get('results-asr.borncharges.json')
         bader = row.data.get('results-asr.bader.json')
         B_a = bader['kwargs']['data']['bader_charges']
+        symbols = bader['kwargs']['data']['symb_a']
         data[row.uid] = {'gap': row.gap,
-                         'B_a': B_a}
+                         'B_a': B_a,
+                         'symbols': symbols}
         if born is not None:
             Z_avv = born['kwargs']['data']['Z_avv']
             data[row.uid]['Z_avv'] = Z_avv
@@ -42,16 +50,20 @@ def analyze():
         nz += 1
         B_a = d['B_a']
         Z_avv = d['Z_avv']
+        symbols = d['symbols']
         x = (d['gap'],
              abs(B_a).mean(),
              abs(np.trace(Z_avv[:, :2, :2], 0, 1, 2) / 2).mean())
         gaps.append(x)
         if abs(x[0] - 3.5) < 0.2 and x[1] < 0.1:
             print(u, d)
+        chi_a = np.array([chis[symbol] for symbol in symbols])
+        I_a = abs(chi_a - chi_a.mean())
         D.extend([(np.trace(Z_vv[:2, :2]) / 2,
                    Z_vv[2, 2],
-                   B)
-                  for Z_vv, B in zip(Z_avv, B_a)])
+                   B,
+                   I)
+                  for Z_vv, B, I in zip(Z_avv, B_a, I_a)])
         if u.startswith('BN-'):
             symbols = ['B', 'N']
         elif u.startswith('MoS2-'):
@@ -64,15 +76,15 @@ def analyze():
                              Z_vv[2, 2],
                              B)
 
-    zin, zout, b = np.array(D).T
+    zin, zout, b, chi = np.array(D).T
     bad = abs(zin) >= 7.5
     print(nz, len(b), sum(bad))
 
-    return zin, zout, b, extra, gaps
+    return zin, zout, b, chi, extra, gaps
 
 
 def plot1():
-    zin, zout, b, extra, gaps = analyze()
+    zin, zout, b, chi, extra, gaps = analyze()
     ok = abs(zin) < 7.5
     zin = zin[ok]
     zout = zout[ok]
@@ -140,6 +152,27 @@ def plot2():
     ax.set_xlim(0, 6)
     ax.set_ylim(0, 7)
     fig.savefig('gap-charge.png')
+    plt.show()
+    return
+
+
+def plot3():
+    zin, zout, b, chi, extra, gaps = analyze()
+    if 0:
+        ok = abs(zin) < 7.5
+        zin = zin[ok]
+        zout = zout[ok]
+        b = b[ok]
+
+    fig = plt.figure(figsize=(width, width * 0.8),
+                     constrained_layout=True)
+    ax = fig.add_subplot(111)
+
+    ax.plot(chi, zout - b, 'o', alpha=0.5, ms=2, label='in-plane')
+
+    ax.set_xlabel('Bader charge [e]')
+    ax.set_ylabel('Born charge [e]')
+    ax.legend()
     plt.show()
     return
 
