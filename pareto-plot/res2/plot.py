@@ -37,7 +37,7 @@ def make_pareto_lines(x_p, y_p):
     plt.plot(all_x, all_y, color='C3', ls='--', label='Pareto front')
     plt.fill_between(all_x, all_y, 1, facecolor='none',
                      edgecolor=[0.7, 0.7, 0.7], hatch='XXX',
-                     linewidth=0.0, zorder=-1, label='Excluded region')
+                     linewidth=0.0, zorder=-1)
 
 
 @plotter()
@@ -79,12 +79,14 @@ def plot():
         pareto_data_x.append(row.natoms)
         pareto_data_y.append(row.hform)
         atoms = row.toatoms()
-        # make_image_of_2D_material_from_multiple_perspectives(atoms)
+        make_image_of_2D_material_from_multiple_perspectives(atoms)
 
     plt.figure(figsize=(textwidth, columnwidth))
     make_pareto_lines(pareto_data_x, pareto_data_y)
-    plt.scatter(pareto_data_x, pareto_data_y, color='k', zorder=2)
-    plt.scatter([6, 9], [-0.3, -0.4], color='C3', zorder=2)
+    plt.scatter(pareto_data_x, pareto_data_y, color='k', zorder=2,
+                label='Included materials')
+    plt.scatter([6, 9], [-0.3, -0.4], color='C3', zorder=2,
+                label='Excluded materials')
     names = ["T'", "T''", "T"]
 
     for x, y, name in zip(pareto_data_x, pareto_data_y, names):

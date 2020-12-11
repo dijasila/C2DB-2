@@ -44,13 +44,11 @@ from ase import Atoms
 from ase.io.pov import get_bondpairs
 
 
-def cut_square_sheet(atoms):
+def cut_square_sheet(atoms, cutsize=10, delta=0.001):
     """Cut out a square sheet of 2D material."""
-    delta = 0.001
     atoms = atoms.repeat((10, 10, 1))
     atoms.center()
     atoms.wrap()
-    cutsize = 20
     cut_cv = np.diag([cutsize, ] * 3)
     pos_av = atoms.positions - atoms.positions[0] + [delta, delta, cutsize / 2]
     spos_cut_ac = np.dot(pos_av, np.linalg.inv(cut_cv))
@@ -124,6 +122,7 @@ def make_images_from_multiple_perspectives(
         atoms,
         rotations=['0x,0y', '-90x', '90y'],
         basename=None,
+        bondatoms=None,
         **kwargs,
 ):
     """Image atomic structure from x, y, and z direction.
@@ -138,6 +137,8 @@ def make_images_from_multiple_perspectives(
     basename: str
         Base for filename, for example "MoS2" would give files like
         MoS2-'0x,0y'.png. Defaults to {atoms.symbols.formula:metal}
+    bondatoms: List of (int, int)-tuples
+        List of atoms to bond. See get_bondpairs function.
     kwargs: dict
         Key word arguments handed through to ase-povray interface.
 
@@ -156,6 +157,7 @@ def make_images_from_multiple_perspectives(
             atoms,
             filename=f'{basename}-{rotation_string}.pov',
             rotation=rotation,
+            bondatoms=bondatoms,
             **kwargs)
         filenames.append(filename)
     return filenames
@@ -163,7 +165,11 @@ def make_images_from_multiple_perspectives(
 
 def make_image_of_2D_material_from_multiple_perspectives(
         atoms,
-        filename=None
+        filename=None,
+        cutsize=10,
+        bondatoms=None,
+        bondscale=0.75,
+        spacing=10,
 ):
     """Make combined image of 2D mat seen from x, y and z direction.
 
@@ -175,6 +181,14 @@ def make_image_of_2D_material_from_multiple_perspectives(
         Atomic structure to make figure of.
     filename: str
         Filename for image. Defaults to f'{formula:metal}-perspectives.png'.
+    cutsize: float
+        Size of cutout of material.
+    bondatoms: None or List of (int, int)-tuples
+        List of atoms to bond. See get_bondpairs function.
+    bondscale: float
+        Used when bondatoms is None. Scale atomic radii to find bonds.
+    spacing: int
+        Add spacing between different perspectives of 2D material.
 
     Returns
     -------
@@ -185,13 +199,17 @@ def make_image_of_2D_material_from_multiple_perspectives(
     if filename is None:
         formula = atoms.symbols.formula
         filename = f'{formula:metal}-perspectives.png'
-    new_atoms = cut_square_sheet(atoms)
+    new_atoms = cut_square_sheet(atoms, cutsize=cutsize)
+
+    if bondatoms is None:
+        bondatoms = get_bondpairs(new_atoms, bondscale)
 
     filenames = make_images_from_multiple_perspectives(
         new_atoms,
         rotations=['0x,0y', '-90x', '90y'],
         basename=format(atoms.symbols.formula,
                         'metal'),
+        bondatoms = bondatoms,
     )
 
     images = []
@@ -199,11 +217,12 @@ def make_image_of_2D_material_from_multiple_perspectives(
         images.append(PIL.Image.open(created_filename))
 
     widths, heights = zip(*(i.size for i in images))
-    total_width = widths[0] + widths[2]
-    total_height = heights[0] + heights[1]
+    total_width = widths[0] + widths[2] + spacing
+    total_height = heights[0] + heights[1] + spacing
     new_image = PIL.Image.new('RGBA', (total_width, total_height))
-    new_image.paste(images[0], box=(images[2].size[0], 0))
-    new_image.paste(images[1], box=(images[2].size[0], images[0].size[1]))
+    new_image.paste(images[0], box=(images[2].size[0] + spacing, 0))
+    new_image.paste(images[1], box=(images[2].size[0] + spacing,
+                                    images[0].size[1] + spacing))
     new_image.paste(images[2], box=(0, 0))
     box = new_image.getbbox()
     new_image = new_image.crop(box=box)
