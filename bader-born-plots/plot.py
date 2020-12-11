@@ -210,9 +210,11 @@ def plot4():
         zout = zout[ok]
         b = b[ok]
 
+    z = (zin * 2 + zout) / 3
+
     i = np.argsort(chi)
     chi = chi[i]
-    zin = zin[i]
+    z = z[i]
     b = b[i]
 
     fig = plt.figure(figsize=(width, width * 0.8),
@@ -222,15 +224,34 @@ def plot4():
     # ax.plot(chi, zin - b, 'o', alpha=0.5, ms=2)
     # ax.plot(chi, zin, 'o', alpha=0.5, ms=2, label='Zin')
     # ax.plot(chi, b, 'o', alpha=0.5, ms=2, label='B')
-    s = ax.scatter(b, zin, c=chi, s=2, alpha=0.5)
+    s = ax.scatter(b, z, c=chi, s=2, alpha=0.5)
+
+    x = [-5, 5]
+    """
+    m = chi > 1
+    p1, p0 = fit = np.polyfit(b[m], z[m], 1)
+    y = np.polyval(fit, x)
+    print(p0, p1)
+    ax.plot(x, y,
+            # label=f'$y = {p0:.1f} + {p1:.1f} x$'
+            )
+    x = [-5, 5]
+    m = chi <= 1
+    p1, p0 = fit = np.polyfit(b[m], z[m], 1)
+    y = np.polyval(fit, x)
+    print(p0, p1)
+    """
+    y = x
+    ax.plot(x, y, 'C3')
 
     ax.set_xlabel('Bader charge [e]')
-    ax.set_ylabel('Born charge (in-plane,) [e]')
+    ax.set_ylabel('Born charge (Tr$(Z)/3$) [e]')
     cbar = fig.colorbar(s)
-    cbar.set_label('I')
-    ax.set_ylim(-7, 7)
+    cbar.set_label('Ionicity')
+    ax.set_xlim(-4, 4)
+    ax.set_ylim(-4, 4)
     # ax.legend()
-    fig.savefig('ionicity2.png')
+    fig.savefig('bader-born-ionicity.png')
     plt.show()
     return
 
