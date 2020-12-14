@@ -11,7 +11,7 @@ p = os.path.abspath('../')
 if p not in sys.path:
     sys.path.append(p)
 
-from rcparams import plotter, textwidth, columnwidth
+from rcparams import plotter, textwidth, columnwidth, update_params, rcp
 from ase.formula import Formula
 
 
@@ -103,7 +103,8 @@ def plot():
             unit = r"$\mathrm{\AA}^2$"
         elif ndim == 0:
             unit = r"$\mathrm{\AA}^3$"
-        plt.figure(figsize=(columnwidth, columnwidth))
+        update_params(rcp)
+        plt.figure(figsize=(columnwidth, columnwidth * 3 / 4))
         plt.plot(omega_w, ax_w.imag, label='imag')
         plt.plot(omega_w, ax_w.real, label='real')
         plt.annotate(r'$\alpha_\infty$', xy=(omega_w[-1] - 30, ax_w.real[-1]),
