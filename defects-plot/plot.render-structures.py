@@ -13,6 +13,7 @@ structures = ['primitive', 'defect_vSi']
 kwargs = {'canvas_width': 1000, 'celllinewidth': 0.}
 for name in structures:
     atoms = read(name + '.json')
+    atoms = atoms.repeat((3, 3, 1))
     # atoms = cut_square_sheet(atoms)
     # if name.split('_')[-1] == 'C2':
     #     bondatoms = None

@@ -253,7 +253,6 @@ def plot_ks(ax):
     ax.text(0.70 - delta, -1.32, '$a_2$', horizontalalignment='right')
     ax.text(0.70 - delta, -1.91, '$a_1$', horizontalalignment='right')
     ax.text(0.05, 0.95, '$\mathrm{V_{Si}}$', horizontalalignment='left', verticalalignment='center')
-    ax.axvspan(0, 0.5, color='grey', ymin=0.14, ymax=0.86, alpha=0.1)
     # ax.text(-2.7, 1, '$a_1$', verticalalignment='center')
     #filename = '/home/niflheim/smanti/5-Update/ks-plot/' + calc.atoms.get_chemical_formula()
     #filename = calc.atoms.get_chemical_formula()
