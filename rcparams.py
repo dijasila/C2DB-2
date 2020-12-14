@@ -24,6 +24,11 @@ columnwidth = 3.13  # in inches
 textwidth = 6.75  # in inches
 
 
+def update_params(params):
+    from matplotlib import rcParams
+    rcParams.update(params)
+
+
 def plotter(rcp=rcp):
     """Decorator pattern for matplotlib plotters."""
     def decorator(plotter):
@@ -48,6 +53,5 @@ class rcParamsDecorator:
 
     def __call__(self, *args, **kwargs):
         """Make plotter call with updated rcParams."""
-        from matplotlib import rcParams
-        rcParams.update(self._rcp)
+        update_params(self._rcp)
         return self._plotter(*args, **kwargs)
