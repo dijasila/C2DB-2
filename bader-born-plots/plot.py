@@ -145,7 +145,8 @@ def plot2():
     ax = fig.add_subplot(111)
 
     ax.plot(g, z, 'o', alpha=0.5, ms=2, label='Born charge')
-    ax.plot(g, b, 'o', color='C3', alpha=0.5, ms=2, label='Bader charge')
+    ax.plot(g, b, 'o',  # color='C3',
+            alpha=0.5, ms=2, label='Bader charge')
     ax.set_xlabel('Band gap [eV]')
     ax.set_ylabel('Charge (mean absolute value) [e]')
     ax.legend()
@@ -259,5 +260,5 @@ def plot4():
 if __name__ == '__main__':
     extract_data()
     # plot1()
-    # plot2()
+    plot2()
     plot4()
