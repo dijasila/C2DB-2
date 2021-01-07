@@ -1,4 +1,5 @@
 import functools
+from ase.phasediagram import PhaseDiagram
 from asr.convex_hull import convex_hull_tables, Result
 
 from asr.core.material import (get_material_from_folder,
@@ -6,6 +7,11 @@ from asr.core.material import (get_material_from_folder,
 from asr.core import read_json
 import os
 import sys
+import matplotlib.pyplot as plt
+
+plt.rc('text', usetex=True)
+plt.rc('text.latex',
+       preamble=r'\usepackage{xcolor}')
 
 p = os.path.abspath('../')
 if p not in sys.path:
@@ -13,6 +19,19 @@ if p not in sys.path:
 
 from rcparams import plotter, textwidth, columnwidth
 from ase.formula import Formula
+
+
+def get_hull_energies(pd: PhaseDiagram):
+    hull_energies = []
+    for ref in pd.references:
+        count = ref[0]
+        refenergy = ref[1]
+        natoms = ref[3]
+        decomp_energy, indices, coefs = pd.decompose(**count)
+        ehull = (refenergy - decomp_energy) / natoms
+        hull_energies.append(ehull)
+
+    return hull_energies
 
 
 def webpanel(result, row, key_descriptions):
@@ -133,12 +152,13 @@ def plot(row, fname, thisrow):
         plt.legend(loc='lower left')
     else:
         x, y, _, hull, simplices = pd.plot2d3()
-        
+        hull_energies = get_hull_energies(pd)
         names = [ref['label'] for ref in references]
         latexnames = [format(Formula(name.split(' ')[0]).reduce()[0], 'latex') for name in names]
         for i, j, k in simplices:
             ax.plot(x[[i, j, k, i]], y[[i, j, k, i]], '-', color='lightblue')
-        edgecolors = ['C2' if on_hull else 'C3' for on_hull in hull]
+        edgecolors = ['C2' if hull_energy < 0.05 else 'C3'
+                      for hull_energy in hull_energies]
         ax.scatter(x, y, facecolor='none', marker='o', edgecolor=edgecolors, s=sizes,
                    zorder=10)
 
@@ -194,7 +214,7 @@ def plot(row, fname, thisrow):
                             legendhandles[2], legendhandles[3]]
         plt.legend(
             newlegendhandles,
-            ['On/off hull',
+            [r'$E_\mathrm{h} {^</_>}\, 5 \mathrm{meV}$',
              legends[0], legends[1]], loc='upper right', handletextpad=0.5,
             handler_map={tuple: ObjectHandler()},
             # bbox_to_anchor=(0.4, 1),
