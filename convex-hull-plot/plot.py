@@ -152,18 +152,32 @@ def plot(row, fname, thisrow):
         plt.legend(loc='lower left')
     else:
         x, y, _, hull, simplices = pd.plot2d3()
+        import numpy as np
+        hull = np.array(hull)
         hull_energies = get_hull_energies(pd)
+        hull = np.array(hull_energies) < 0.05
         names = [ref['label'] for ref in references]
         latexnames = [format(Formula(name.split(' ')[0]).reduce()[0], 'latex') for name in names]
         for i, j, k in simplices:
             ax.plot(x[[i, j, k, i]], y[[i, j, k, i]], '-', color='lightblue')
         edgecolors = ['C2' if hull_energy < 0.05 else 'C3'
                       for hull_energy in hull_energies]
-        ax.scatter(x, y, facecolor='none', marker='o', edgecolor=edgecolors, s=sizes,
-                   zorder=10)
+        ax.scatter(
+            x[~hull], y[~hull],
+            facecolor='none', marker='o',
+            edgecolor=np.array(edgecolors)[~hull], s=np.array(sizes)[~hull],
+            zorder=9,
+        )
+
+        ax.scatter(
+            x[hull], y[hull],
+            facecolor='none', marker='o',
+            edgecolor=np.array(edgecolors)[hull], s=np.array(sizes)[hull],
+            zorder=10,
+        )
 
         printed_names = set()
-        for a, b, name, on_hull in zip(x, y, latexnames, hull):
+        for a, b, name, on_hull, hull_energy in zip(x, y, latexnames, hull, hull_energies):
             if name in ['BiITe', 'I', 'Bi', 'Te'] and name not in printed_names:
                 printed_names.add(name)
                 ax.text(a - 0.02, b, name, ha='right', va='top')
