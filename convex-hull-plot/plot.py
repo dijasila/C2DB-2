@@ -9,10 +9,6 @@ import os
 import sys
 import matplotlib.pyplot as plt
 
-plt.rc('text', usetex=True)
-plt.rc('text.latex',
-       preamble=r'\usepackage{xcolor}')
-
 p = os.path.abspath('../')
 if p not in sys.path:
     sys.path.append(p)
@@ -228,7 +224,7 @@ def plot(row, fname, thisrow):
                             legendhandles[2], legendhandles[3]]
         plt.legend(
             newlegendhandles,
-            [r'$E_\mathrm{h} {^</_>}\, 5 \mathrm{meV}$',
+            [r'${^</_>}\, 5\, \mathrm{meV}$',
              legends[0], legends[1]], loc='upper right', handletextpad=0.5,
             handler_map={tuple: ObjectHandler()},
             # bbox_to_anchor=(0.4, 1),
