@@ -152,7 +152,7 @@ def plot2():
     ax.legend()
     ax.set_xlim(0, 6)
     ax.set_ylim(0, 7)
-    fig.savefig('gap-charge.png')
+    fig.savefig('gap-charge.pdf', dpi=300)
     plt.show()
     return
 
@@ -252,7 +252,7 @@ def plot4():
     ax.set_xlim(-4, 4)
     ax.set_ylim(-4, 4)
     # ax.legend()
-    fig.savefig('bader-born-ionicity.png')
+    fig.savefig('bader-born-ionicity.pdf', dpi=300)
     plt.show()
     return
 
