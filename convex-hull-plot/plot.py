@@ -178,9 +178,17 @@ def plot(row, fname, thisrow):
 
         printed_names = set()
         for a, b, name, on_hull, hull_energy in zip(x, y, latexnames, hull, hull_energies):
-            if name in ['BiITe', 'I', 'Bi', 'Te'] and name not in printed_names:
+            print(name, on_hull)
+            if name in [
+                    'BiITe', 'I', 'Bi',
+                    'Te', 'Bi$_{2}$Te$_{3}$',
+                    'BiI$_{3}$',
+            ] and name not in printed_names:
                 printed_names.add(name)
-                ax.text(a - 0.02, b, name, ha='right', va='top')
+                if name == 'Bi$_{2}$Te$_{3}$':
+                    ax.text(a, b - 0.03, name, ha='center', va='top')
+                else:
+                    ax.text(a - 0.02, b, name, ha='right', va='top')
         A, B, C = pd.symbols
         bfrac = count.get(B, 0) / sum(count.values())
         cfrac = count.get(C, 0) / sum(count.values())
@@ -228,7 +236,7 @@ def plot(row, fname, thisrow):
                             legendhandles[2], legendhandles[3]]
         plt.legend(
             newlegendhandles,
-            [r'$E_\mathrm{h} {^</_>}\, 5 \mathrm{meV}$',
+            [r'${^</_>}\, 5 \mathrm{meV}$',
              legends[0], legends[1]], loc='upper right', handletextpad=0.5,
             handler_map={tuple: ObjectHandler()},
             # bbox_to_anchor=(0.4, 1),
