@@ -118,7 +118,7 @@ def plot():
 
     # plt.annotate('Pareto optimal', xy=(8, -0.525), ha='center', va='top')
     plt.xlabel('Number of atoms per unit cell')
-    plt.ylabel(r'$\Delta H_\mathrm{form}$ [eV/atom]')
+    plt.ylabel(r'$\Delta H$ [eV/atom]')
     plt.xlim(0, 13)
     plt.xticks(range(0, 14))
     plt.legend()  # facecolor='w', framealpha=1)
